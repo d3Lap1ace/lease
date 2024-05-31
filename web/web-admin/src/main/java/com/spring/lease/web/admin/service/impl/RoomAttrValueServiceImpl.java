@@ -1,9 +1,9 @@
-package com.atguigu.lease.web.admin.service.impl;
+package com.spring.lease.web.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.atguigu.lease.model.entity.RoomAttrValue;
-import com.atguigu.lease.web.admin.service.RoomAttrValueService;
-import com.atguigu.lease.web.admin.mapper.RoomAttrValueMapper;
+import com.spring.lease.model.entity.RoomAttrValue;
+import com.spring.lease.web.admin.service.RoomAttrValueService;
+import com.spring.lease.web.admin.mapper.RoomAttrValueMapper;
 import org.springframework.stereotype.Service;
 
 /**

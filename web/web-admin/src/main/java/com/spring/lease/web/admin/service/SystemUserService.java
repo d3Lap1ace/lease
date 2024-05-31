@@ -1,9 +1,6 @@
-package com.atguigu.lease.web.admin.service;
+package com.spring.lease.web.admin.service;
 
-import com.atguigu.lease.model.entity.SystemUser;
-import com.atguigu.lease.web.admin.vo.system.user.SystemUserItemVo;
-import com.atguigu.lease.web.admin.vo.system.user.SystemUserQueryVo;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.spring.lease.model.entity.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -1,11 +1,11 @@
-package com.atguigu.lease.web.admin.controller.lease;
+package com.spring.lease.web.admin.controller.lease;
 
 
-import com.atguigu.lease.common.result.Result;
-import com.atguigu.lease.model.entity.LeaseAgreement;
-import com.atguigu.lease.model.enums.LeaseStatus;
-import com.atguigu.lease.web.admin.vo.agreement.AgreementQueryVo;
-import com.atguigu.lease.web.admin.vo.agreement.AgreementVo;
+import com.spring.lease.common.result.Result;
+import com.spring.lease.model.entity.LeaseAgreement;
+import com.spring.lease.model.enums.LeaseStatus;
+import com.spring.lease.web.admin.vo.agreement.AgreementQueryVo;
+import com.spring.lease.web.admin.vo.agreement.AgreementVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

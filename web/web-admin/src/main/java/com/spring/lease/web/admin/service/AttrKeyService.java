@@ -1,10 +1,7 @@
-package com.atguigu.lease.web.admin.service;
+package com.spring.lease.web.admin.service;
 
-import com.atguigu.lease.model.entity.AttrKey;
-import com.atguigu.lease.web.admin.vo.attr.AttrKeyVo;
+import com.spring.lease.model.entity.AttrKey;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
 
 /**
 * @author liubo

@@ -1,4 +1,4 @@
-package com.atguigu.lease.model.entity;
+package com.spring.lease.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

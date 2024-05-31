@@ -1,4 +1,4 @@
-package com.atguigu.lease.model.enums;
+package com.spring.lease.model.enums;
 
 public interface BaseEnum {
 

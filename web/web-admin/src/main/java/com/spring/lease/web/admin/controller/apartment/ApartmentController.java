@@ -1,13 +1,13 @@
-package com.atguigu.lease.web.admin.controller.apartment;
+package com.spring.lease.web.admin.controller.apartment;
 
 
-import com.atguigu.lease.common.result.Result;
-import com.atguigu.lease.model.entity.ApartmentInfo;
-import com.atguigu.lease.model.enums.ReleaseStatus;
-import com.atguigu.lease.web.admin.vo.apartment.ApartmentDetailVo;
-import com.atguigu.lease.web.admin.vo.apartment.ApartmentItemVo;
-import com.atguigu.lease.web.admin.vo.apartment.ApartmentQueryVo;
-import com.atguigu.lease.web.admin.vo.apartment.ApartmentSubmitVo;
+import com.spring.lease.common.result.Result;
+import com.spring.lease.model.entity.ApartmentInfo;
+import com.spring.lease.model.enums.ReleaseStatus;
+import com.spring.lease.web.admin.vo.apartment.ApartmentDetailVo;
+import com.spring.lease.web.admin.vo.apartment.ApartmentItemVo;
+import com.spring.lease.web.admin.vo.apartment.ApartmentQueryVo;
+import com.spring.lease.web.admin.vo.apartment.ApartmentSubmitVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,8 +1,8 @@
-package com.atguigu.lease.web.admin.service.impl;
+package com.spring.lease.web.admin.service.impl;
 
-import com.atguigu.lease.model.entity.SystemUser;
-import com.atguigu.lease.web.admin.mapper.SystemUserMapper;
-import com.atguigu.lease.web.admin.service.SystemUserService;
+import com.spring.lease.model.entity.SystemUser;
+import com.spring.lease.web.admin.mapper.SystemUserMapper;
+import com.spring.lease.web.admin.service.SystemUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
-package com.atguigu.lease.web.admin.service.impl;
+package com.spring.lease.web.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.atguigu.lease.model.entity.DistrictInfo;
-import com.atguigu.lease.web.admin.service.DistrictInfoService;
-import com.atguigu.lease.web.admin.mapper.DistrictInfoMapper;
+import com.spring.lease.model.entity.DistrictInfo;
+import com.spring.lease.web.admin.service.DistrictInfoService;
+import com.spring.lease.web.admin.mapper.DistrictInfoMapper;
 import org.springframework.stereotype.Service;
 
 /**

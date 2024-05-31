@@ -1,6 +1,6 @@
-package com.atguigu.lease.web.admin.service;
+package com.spring.lease.web.admin.service;
 
-import com.atguigu.lease.model.entity.LeaseTerm;
+import com.spring.lease.model.entity.LeaseTerm;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

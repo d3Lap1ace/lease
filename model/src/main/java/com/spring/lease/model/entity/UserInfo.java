@@ -1,14 +1,11 @@
-package com.atguigu.lease.model.entity;
+package com.spring.lease.model.entity;
 
-import com.atguigu.lease.model.enums.BaseStatus;
+import com.spring.lease.model.enums.BaseStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Schema(description = "用户信息表")
 @TableName(value = "user_info")

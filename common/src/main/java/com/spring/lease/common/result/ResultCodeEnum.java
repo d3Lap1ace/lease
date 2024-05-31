@@ -1,4 +1,4 @@
-package com.atguigu.lease.common.result;
+package com.spring.lease.common.result;
 
 import lombok.Getter;
 

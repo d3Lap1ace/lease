@@ -1,6 +1,6 @@
-package com.atguigu.lease.web.admin.vo.user;
+package com.spring.lease.web.admin.vo.user;
 
-import com.atguigu.lease.model.enums.BaseStatus;
+import com.spring.lease.model.enums.BaseStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

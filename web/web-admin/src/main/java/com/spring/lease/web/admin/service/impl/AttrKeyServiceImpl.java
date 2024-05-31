@@ -1,8 +1,8 @@
-package com.atguigu.lease.web.admin.service.impl;
+package com.spring.lease.web.admin.service.impl;
 
-import com.atguigu.lease.model.entity.AttrKey;
-import com.atguigu.lease.web.admin.mapper.AttrKeyMapper;
-import com.atguigu.lease.web.admin.service.AttrKeyService;
+import com.spring.lease.model.entity.AttrKey;
+import com.spring.lease.web.admin.mapper.AttrKeyMapper;
+import com.spring.lease.web.admin.service.AttrKeyService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

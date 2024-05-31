@@ -1,8 +1,8 @@
-package com.atguigu.lease.web.admin.vo.apartment;
+package com.spring.lease.web.admin.vo.apartment;
 
 
-import com.atguigu.lease.model.entity.ApartmentInfo;
-import com.atguigu.lease.web.admin.vo.graph.GraphVo;
+import com.spring.lease.model.entity.ApartmentInfo;
+import com.spring.lease.web.admin.vo.graph.GraphVo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

@@ -1,7 +1,7 @@
-package com.atguigu.lease.web.admin.vo.room;
+package com.spring.lease.web.admin.vo.room;
 
-import com.atguigu.lease.model.entity.RoomInfo;
-import com.atguigu.lease.web.admin.vo.graph.GraphVo;
+import com.spring.lease.model.entity.RoomInfo;
+import com.spring.lease.web.admin.vo.graph.GraphVo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

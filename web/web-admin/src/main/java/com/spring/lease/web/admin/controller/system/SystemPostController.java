@@ -1,8 +1,8 @@
-package com.atguigu.lease.web.admin.controller.system;
+package com.spring.lease.web.admin.controller.system;
 
-import com.atguigu.lease.common.result.Result;
-import com.atguigu.lease.model.entity.SystemPost;
-import com.atguigu.lease.model.enums.BaseStatus;
+import com.spring.lease.common.result.Result;
+import com.spring.lease.model.entity.SystemPost;
+import com.spring.lease.model.enums.BaseStatus;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

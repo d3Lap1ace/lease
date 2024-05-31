@@ -1,8 +1,7 @@
-package com.atguigu.lease.model.entity;
+package com.spring.lease.model.entity;
 
-import com.atguigu.lease.model.enums.BaseStatus;
-import com.atguigu.lease.model.enums.SystemUserType;
-import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.spring.lease.model.enums.BaseStatus;
+import com.spring.lease.model.enums.SystemUserType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;

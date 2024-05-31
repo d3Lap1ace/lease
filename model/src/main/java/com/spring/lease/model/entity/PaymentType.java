@@ -1,9 +1,8 @@
-package com.atguigu.lease.model.entity;
+package com.spring.lease.model.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Builder;
 import lombok.Data;
 
 @Schema(description = "支付方式表")

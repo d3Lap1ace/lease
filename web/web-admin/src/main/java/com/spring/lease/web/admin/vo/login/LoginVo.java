@@ -1,4 +1,4 @@
-package com.atguigu.lease.web.admin.vo.login;
+package com.spring.lease.web.admin.vo.login;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
