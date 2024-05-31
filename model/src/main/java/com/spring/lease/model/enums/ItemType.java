@@ -11,8 +11,8 @@ public enum ItemType implements BaseEnum {
     ROOM(2, "房间");
 
 
-    @EnumValue
-    @JsonValue
+    @EnumValue  // 转换枚举类型 通过webMvcConfiguration
+    @JsonValue  // 将json传送的数据 (枚举属性 变成 属性值)
     private Integer code;
     private String name;
 

@@ -2,6 +2,7 @@ package com.spring.lease.common.mybatisplus;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
@@ -14,11 +15,14 @@ import java.util.Date;
  * From the Laplace Demon
  */
 
-
+@Component
 public class MybatisMetaObjectHandle implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
+        // 设置添加的时候给createTime填充值
         this.strictInsertFill(metaObject,"createTime", Date.class,new Date());
+        // 设置添加的时候给isdelete填充值
+        this.strictInsertFill(metaObject,"isDeleted",Byte.class,(byte)0);
     }
 
     @Override

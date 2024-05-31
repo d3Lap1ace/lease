@@ -1,6 +1,7 @@
 package com.spring.lease.web.admin.controller.apartment;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.lease.common.result.Result;
 import com.spring.lease.model.entity.PaymentType;
 import com.spring.lease.web.admin.service.PaymentTypeService;
@@ -20,6 +21,7 @@ public class PaymentTypeController {
     @Autowired
     private PaymentTypeService service;
 
+
     @Operation(summary = "查询全部支付方式列表")
     @GetMapping("list")
     public Result<List<PaymentType>> listPaymentType() {
@@ -27,12 +29,14 @@ public class PaymentTypeController {
         return Result.ok(list);
     }
 
+
     @Operation(summary = "保存或更新支付方式")
     @PostMapping("saveOrUpdate")
     public Result saveOrUpdatePaymentType(@RequestBody PaymentType paymentType) {
         service.saveOrUpdate(paymentType);
         return Result.ok();
     }
+
 
     @Operation(summary = "根据ID删除支付方式")
     @DeleteMapping("deleteById")

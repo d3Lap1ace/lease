@@ -1,6 +1,7 @@
 server:
   port: 8080
 spring:
+  # 数据库连接
   datasource:
     url: jdbc:mysql://192.168.1.2:3306/lease
     type: com.zaxxer.hikari.HikariDataSource
@@ -18,7 +19,8 @@ spring:
 #用于打印框架生成的sql语句，便于调试
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 开启日志
+    map-underscore-to-camel-case: true                     # 开启驼峰自动映射
   global-config:
     db-config:
       logic-delete-field: is_deleted # 全局逻辑删除的实体字段名(配置后可以忽略不配置步骤二)
