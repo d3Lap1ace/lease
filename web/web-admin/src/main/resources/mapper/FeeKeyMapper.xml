@@ -4,4 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.lease.web.admin.mapper.FeeKeyMapper">
 
+    <resultMap id="feeKeyVoMap" type="com.spring.lease.web.admin.vo.fee.FeeKeyVo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="feeValueList" ofType="com.spring.lease.model.entity.FeeValue" autoMapping="true">
+            <id column="fv_id" property="id"/>
+            <result column="fv_name" property="name"/>
+        </collection>
+    </resultMap>
+
+    <select id="listFeeInfo" resultMap="feeKeyVoMap">
+        select fk.id,fk.name,fv.id fv_id,fv.name fv_name,fv.fee_key_id
+            from fee_key fk
+                left join fee_value fv
+                    on fk.id = fv.fee_key_id and fv.is_deleted = 0
+            where fk.is_deleted = 0;
+    </select>
 </mapper>

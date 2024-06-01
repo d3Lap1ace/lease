@@ -2,6 +2,9 @@ package com.spring.lease.web.admin.service;
 
 import com.spring.lease.model.entity.FeeKey;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spring.lease.web.admin.vo.fee.FeeKeyVo;
+
+import java.util.List;
 
 /**
 * @author liubo
@@ -10,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface FeeKeyService extends IService<FeeKey> {
 
+    List<FeeKeyVo>listFeeInfo();
 }

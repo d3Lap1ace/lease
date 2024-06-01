@@ -2,6 +2,7 @@ package com.spring.lease.web.admin.service;
 
 import com.spring.lease.model.entity.ApartmentInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spring.lease.web.admin.vo.apartment.ApartmentSubmitVo;
 
 /**
 * @author liubo
@@ -9,5 +10,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-07-24 15:48:00
 */
 public interface ApartmentInfoService extends IService<ApartmentInfo> {
-
+    void saveOrUpdateApartment(ApartmentSubmitVo apartmentSubmitVo);
+    void deleteApartmentById(Long id);
 }

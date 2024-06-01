@@ -4,6 +4,10 @@ package com.spring.lease.web.admin.controller.apartment;
 import com.spring.lease.common.result.Result;
 import com.spring.lease.model.entity.ApartmentInfo;
 import com.spring.lease.model.enums.ReleaseStatus;
+import com.spring.lease.web.admin.service.ApartmentFacilityService;
+import com.spring.lease.web.admin.service.ApartmentFeeValueService;
+import com.spring.lease.web.admin.service.ApartmentInfoService;
+import com.spring.lease.web.admin.service.ApartmentLabelService;
 import com.spring.lease.web.admin.vo.apartment.ApartmentDetailVo;
 import com.spring.lease.web.admin.vo.apartment.ApartmentItemVo;
 import com.spring.lease.web.admin.vo.apartment.ApartmentQueryVo;
@@ -11,6 +15,8 @@ import com.spring.lease.web.admin.vo.apartment.ApartmentSubmitVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.checkerframework.checker.units.qual.A;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +27,19 @@ import java.util.List;
 @RequestMapping("/admin/apartment")
 public class ApartmentController {
 
+    @Autowired
+    private ApartmentInfoService apartmentInfoService;
+    @Autowired
+    private ApartmentFacilityService apartmentFacilityService;
+    @Autowired
+    private ApartmentLabelService apartmentLabelService;
+    @Autowired
+    private ApartmentFeeValueService apartmentFeeValueService;
+
     @Operation(summary = "保存或更新公寓信息")
     @PostMapping("saveOrUpdate")
     public Result saveOrUpdate(@RequestBody ApartmentSubmitVo apartmentSubmitVo) {
+        apartmentInfoService.saveOrUpdate(apartmentSubmitVo);
         return Result.ok();
     }
 
@@ -36,12 +52,14 @@ public class ApartmentController {
     @Operation(summary = "根据ID获取公寓详细信息")
     @GetMapping("getDetailById")
     public Result<ApartmentDetailVo> getDetailById(@RequestParam Long id) {
+
         return Result.ok();
     }
 
     @Operation(summary = "根据id删除公寓信息")
     @DeleteMapping("removeById")
     public Result removeById(@RequestParam Long id) {
+        apartmentInfoService.removeById(id);
         return Result.ok();
     }
 

@@ -2,6 +2,9 @@ package com.spring.lease.web.admin.service;
 
 import com.spring.lease.model.entity.AttrKey;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spring.lease.web.admin.vo.attr.AttrKeyVo;
+
+import java.util.List;
 
 /**
 * @author liubo
@@ -10,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface AttrKeyService extends IService<AttrKey> {
 
+    List<AttrKeyVo> getAttrKeyVoList();
 }

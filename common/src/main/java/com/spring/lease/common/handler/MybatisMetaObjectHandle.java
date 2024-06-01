@@ -1,4 +1,4 @@
-package com.spring.lease.common.mybatisplus;
+package com.spring.lease.common.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
