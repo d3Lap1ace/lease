@@ -1,7 +1,10 @@
 package com.spring.lease.web.admin.mapper;
 
+import com.spring.lease.model.entity.FacilityInfo;
 import com.spring.lease.model.entity.RoomFacility;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
 * @author liubo
@@ -10,7 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.spring.lease.model.RoomFacility
 */
 public interface RoomFacilityMapper extends BaseMapper<RoomFacility> {
-
 }
 
 

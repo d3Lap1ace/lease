@@ -2,6 +2,9 @@ package com.spring.lease.web.admin.mapper;
 
 import com.spring.lease.model.entity.AttrValue;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.spring.lease.web.admin.vo.attr.AttrValueVo;
+
+import java.util.List;
 
 /**
 * @author liubo
@@ -10,7 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.spring.lease.model.AttrValue
 */
 public interface AttrValueMapper extends BaseMapper<AttrValue> {
-
+    List<AttrValueVo> selectListByRoomId(Long id);
 }
 
 

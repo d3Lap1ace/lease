@@ -14,7 +14,9 @@ import java.util.List;
 * @Entity com.spring.lease.model.LabelInfo
 */
 public interface LabelInfoMapper extends BaseMapper<LabelInfo> {
-    List<FacilityInfo> selectListByApartmentId(Long id);
+    List<LabelInfo> selectListByApartmentId(Long id);
+
+    List<LabelInfo> selectListByRoomId(Long id);
 }
 
 
