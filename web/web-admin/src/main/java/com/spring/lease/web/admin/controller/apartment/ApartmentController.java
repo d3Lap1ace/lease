@@ -32,12 +32,7 @@ public class ApartmentController {
 
     @Autowired
     private ApartmentInfoService apartmentInfoService;
-    @Autowired
-    private ApartmentFacilityService apartmentFacilityService;
-    @Autowired
-    private ApartmentLabelService apartmentLabelService;
-    @Autowired
-    private ApartmentFeeValueService apartmentFeeValueService;
+
 
     @Operation(summary = "保存或更新公寓信息")
     @PostMapping("saveOrUpdate")

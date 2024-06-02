@@ -3,10 +3,10 @@ server:
 spring:
   # 数据库连接
   datasource:
-    url: jdbc:mysql://192.168.1.2:3306/lease
+    url: jdbc:mysql://192.168.6.100:3306/lease
     type: com.zaxxer.hikari.HikariDataSource
     username: root
-    password: 123456
+    password: root
     hikari:
       connection-test-query: SELECT 1 # 自动检测连接
       connection-timeout: 60000 #数据库连接超时时间,默认30秒

@@ -42,6 +42,14 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
     private GraphInfoService graphInfoService;
     @Autowired
     private RoomInfoService roomInfoService;
+    @Autowired
+    private GraphInfoMapper graphInfoMapper;
+    @Autowired
+    private LabelInfoMapper labelInfoMapper;
+    @Autowired
+    private FacilityInfoMapper facilityInfoMapper;
+    @Autowired
+    private FeeValueMapper feeValueMapper;
 
 
     @Override
@@ -199,16 +207,16 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
         if(apartmentInfo == null){return null;}
 
         // 查询LabelInfo
-        List<LabelInfo> labelInfoList = LabelInfoMapper.selectListByApartmentId(id);
+        List<LabelInfo> labelInfoList = labelInfoMapper.selectListByApartmentId(id);
 
         // 查询GraphInfo
-        List<GraphVo> graphVoList = GraphInfoMapper.selectListByItemTypeAndId(id);
+        List<GraphVo> graphVoList = graphInfoMapper.selectListByItemTypeAndId(ItemType.APARTMENT,id);
 
         // 查询FacilInfo
-        List<FacilityInfo> facilityInfoList = FacilityInfoMapper.selectListByApartmentId(id);
+        List<FacilityInfo> facilityInfoList = facilityInfoMapper.selectListByApartmentId(id);
 
         // 查询FeeValue
-        List<FeeValueVo> feeValueVoList = FeeValueMapper.selectListByApartmentId(id);
+        List<FeeValueVo> feeValueVoList = feeValueMapper.selectListByApartmentId(id);
 
         // 生成公寓详细信息对象
         ApartmentDetailVo adminApartmentDetailVo = new ApartmentDetailVo();
