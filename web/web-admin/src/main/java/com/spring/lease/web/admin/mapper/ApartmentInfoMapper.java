@@ -1,7 +1,10 @@
 package com.spring.lease.web.admin.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spring.lease.model.entity.ApartmentInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.spring.lease.web.admin.vo.apartment.ApartmentItemVo;
+import com.spring.lease.web.admin.vo.apartment.ApartmentQueryVo;
 
 /**
 * @author liubo
@@ -10,7 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.spring.lease.model.ApartmentInfo
 */
 public interface ApartmentInfoMapper extends BaseMapper<ApartmentInfo> {
-
+    IPage<ApartmentItemVo> pageApartmentItemByQuery(IPage<ApartmentItemVo> page, ApartmentQueryVo queryVo);
 }
 
 

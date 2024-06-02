@@ -1,6 +1,7 @@
 package com.spring.lease.web.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spring.lease.common.exception.LeaseException;
 import com.spring.lease.common.result.ResultCodeEnum;
 import com.spring.lease.model.entity.*;
@@ -9,6 +10,8 @@ import com.spring.lease.web.admin.mapper.*;
 import com.spring.lease.web.admin.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring.lease.web.admin.vo.apartment.ApartmentDetailVo;
+import com.spring.lease.web.admin.vo.apartment.ApartmentItemVo;
+import com.spring.lease.web.admin.vo.apartment.ApartmentQueryVo;
 import com.spring.lease.web.admin.vo.apartment.ApartmentSubmitVo;
 import com.spring.lease.web.admin.vo.fee.FeeValueVo;
 import com.spring.lease.web.admin.vo.graph.GraphVo;
@@ -219,11 +222,12 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
         adminApartmentDetailVo.setFeeValueVoList(feeValueVoList);
 
         return adminApartmentDetailVo;
+    }
 
+    @Override
+    public IPage<ApartmentItemVo> pageApartmentItemByQuery(IPage<ApartmentItemVo> page, ApartmentQueryVo queryVo) {
 
-
-
-
+        return ApartmentInfoMapper.pageApartmentItemByQuery(page,queryVo);
     }
 }
 

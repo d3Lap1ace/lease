@@ -3,6 +3,7 @@ package com.spring.lease.web.admin.controller.apartment;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.lease.common.result.Result;
 import com.spring.lease.model.entity.ApartmentInfo;
 import com.spring.lease.model.enums.ReleaseStatus;
@@ -48,8 +49,11 @@ public class ApartmentController {
     @Operation(summary = "根据条件分页查询公寓列表")
     @GetMapping("pageItem")
     public Result<IPage<ApartmentItemVo>> pageItem(@RequestParam long current, @RequestParam long size, ApartmentQueryVo queryVo) {
-
-        return Result.ok();
+        // 创建page对象
+        IPage<ApartmentItemVo> page = new Page<>(current, size);
+        // 获取查询列表
+        IPage<ApartmentItemVo> list = apartmentInfoService.pageApartmentItemByQuery(page, queryVo);
+        return Result.ok(list);
     }
 
     @Operation(summary = "根据ID获取公寓详细信息")
