@@ -43,6 +43,13 @@ public class Result<T> {
         return Result.ok(null);
     }
 
+    public static <T> Result<T> lease(Integer code, String message) {
+        Result<T> Result = new Result<>();
+        Result.setCode(code);
+        Result.setMessage(message);
+        return Result;
+    }
+
     public static <T> Result<T> fail() {
         return build(null, ResultCodeEnum.FAIL);
     }

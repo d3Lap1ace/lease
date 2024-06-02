@@ -5,11 +5,14 @@ import com.spring.lease.common.exception.LeaseException;
 import com.spring.lease.common.result.ResultCodeEnum;
 import com.spring.lease.model.entity.*;
 import com.spring.lease.model.enums.ItemType;
-import com.spring.lease.web.admin.mapper.ApartmentInfoMapper;
+import com.spring.lease.web.admin.mapper.*;
 import com.spring.lease.web.admin.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.spring.lease.web.admin.vo.apartment.ApartmentDetailVo;
 import com.spring.lease.web.admin.vo.apartment.ApartmentSubmitVo;
+import com.spring.lease.web.admin.vo.fee.FeeValueVo;
 import com.spring.lease.web.admin.vo.graph.GraphVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -70,26 +73,34 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
             apartmentFeeValueService.remove(apartmentFeeValueLambdaQueryWrapper);
 
 
-            // 4. 根据apartment_id删除标签
-            LambdaQueryWrapper<GraphInfo> graphInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            // 4.根据item_id和item_type删除图片
+            LambdaQueryWrapper<GraphInfo> graphVoLambdaQueryWrapper = new LambdaQueryWrapper<>();
             // 封装条件
-            graphInfoLambdaQueryWrapper.eq(GraphInfo::getItemId,id);
+            graphVoLambdaQueryWrapper.eq(GraphInfo::getItemType,ItemType.APARTMENT);
+            graphVoLambdaQueryWrapper.eq(GraphInfo::getItemId,id);
             // 根据条件删除
-            graphInfoService.remove(graphInfoLambdaQueryWrapper);
+            graphInfoService.remove(graphVoLambdaQueryWrapper);
 
 
 
         }
         // 1. 保存配套信息
+        // 获取所有的配套id
         List<Long> facilityInfoIds = apartmentSubmitVo.getFacilityInfoIds();
         if(!CollectionUtils.isEmpty(facilityInfoIds)){
+            // 创建一个保存ApartmentFacility对象的集合
             ArrayList<ApartmentFacility> apartmentFacilityList = new ArrayList<>();
+            // 遍历所有的配套id
             for (Long facilityInfoId : facilityInfoIds) {
+                // 创建ApartmentFacility对象
                 ApartmentFacility apartmentFacility = new ApartmentFacility();
+                // 设置公寓id
                 apartmentFacility.setApartmentId(id);
                 apartmentFacility.setFacilityId(facilityInfoId);
+                // 将apartmentFacility 添加到集合中
                 apartmentFacilityList.add(apartmentFacility);
             }
+            // 批量插入
             apartmentFacilityService.saveBatch(apartmentFacilityList);
         }
         // 2. 保存标签信息
@@ -135,7 +146,7 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
 
     @Override
     public void deleteApartmentById(Long id) {
-        // 判断当前公寓下是否有房价,如果有不允许删除
+        // 判断当前公寓下是否有房子,如果有不允许删除
         LambdaQueryWrapper<RoomInfo> roomInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
         roomInfoLambdaQueryWrapper.eq(RoomInfo::getApartmentId,id);
         long count = roomInfoService.count(roomInfoLambdaQueryWrapper);
@@ -176,6 +187,43 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
             graphInfoService.remove(graphInfoLambdaQueryWrapper);
 
         }
+    }
+
+    @Override
+    public ApartmentDetailVo getApartmentDetilByid(Long id) {
+        // 查询apartmentInfo
+        ApartmentInfo apartmentInfo = this.getById(id);
+        if(apartmentInfo == null){return null;}
+
+        // 查询LabelInfo
+        List<LabelInfo> labelInfoList = LabelInfoMapper.selectListByApartmentId(id);
+
+        // 查询GraphInfo
+        List<GraphVo> graphVoList = GraphInfoMapper.selectListByItemTypeAndId(id);
+
+        // 查询FacilInfo
+        List<FacilityInfo> facilityInfoList = FacilityInfoMapper.selectListByApartmentId(id);
+
+        // 查询FeeValue
+        List<FeeValueVo> feeValueVoList = FeeValueMapper.selectListByApartmentId(id);
+
+        // 生成公寓详细信息对象
+        ApartmentDetailVo adminApartmentDetailVo = new ApartmentDetailVo();
+
+        //将adminPartmentDetailVo的属性复制给apartmentInfo
+        BeanUtils.copyProperties(apartmentInfo, adminApartmentDetailVo);
+
+        adminApartmentDetailVo.setGraphVoList(graphVoList);
+        adminApartmentDetailVo.setLabelInfoList(labelInfoList);
+        adminApartmentDetailVo.setFacilityInfoList(facilityInfoList);
+        adminApartmentDetailVo.setFeeValueVoList(feeValueVoList);
+
+        return adminApartmentDetailVo;
+
+
+
+
+
     }
 }
 

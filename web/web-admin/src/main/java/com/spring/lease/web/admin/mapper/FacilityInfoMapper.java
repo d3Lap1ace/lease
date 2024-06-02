@@ -2,6 +2,7 @@ package com.spring.lease.web.admin.mapper;
 
 import com.spring.lease.model.entity.FacilityInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
 
@@ -11,8 +12,9 @@ import java.util.List;
 * @createDate 2023-07-24 15:48:00
 * @Entity com.spring.lease.model.FacilityInfo
 */
-public interface FacilityInfoMapper extends BaseMapper<FacilityInfo> {
 
+public interface FacilityInfoMapper extends BaseMapper<FacilityInfo> {
+    List<FacilityInfo> selectListByApartmentId(Long id);
 }
 
 

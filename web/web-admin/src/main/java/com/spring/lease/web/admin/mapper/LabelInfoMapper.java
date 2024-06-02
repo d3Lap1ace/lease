@@ -1,5 +1,6 @@
 package com.spring.lease.web.admin.mapper;
 
+import com.spring.lease.model.entity.FacilityInfo;
 import com.spring.lease.model.entity.LabelInfo;
 import com.spring.lease.model.enums.ItemType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -13,7 +14,7 @@ import java.util.List;
 * @Entity com.spring.lease.model.LabelInfo
 */
 public interface LabelInfoMapper extends BaseMapper<LabelInfo> {
-
+    List<FacilityInfo> selectListByApartmentId(Long id);
 }
 
 

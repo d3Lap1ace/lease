@@ -2,6 +2,9 @@ package com.spring.lease.web.admin.mapper;
 
 import com.spring.lease.model.entity.FeeValue;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.spring.lease.web.admin.vo.fee.FeeValueVo;
+
+import java.util.List;
 
 /**
 * @author liubo
@@ -10,7 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.spring.lease.model.FeeValue
 */
 public interface FeeValueMapper extends BaseMapper<FeeValue> {
-
+    List<FeeValueVo> selectListByApartmentId(Long id);
 }
 
 
