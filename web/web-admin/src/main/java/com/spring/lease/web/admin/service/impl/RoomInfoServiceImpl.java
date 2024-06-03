@@ -188,7 +188,7 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoMapper, RoomInfo>
     @Override
     public void removeRoomById(Long id) {
         //1.删除RoomInfo
-        baseMapper.deleteById(id);
+        super.removeById(id);
 
         // 1. 删除原有graphInfoList
         LambdaQueryWrapper<GraphInfo> graphInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
