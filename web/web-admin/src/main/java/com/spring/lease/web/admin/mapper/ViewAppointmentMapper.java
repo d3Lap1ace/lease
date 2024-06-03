@@ -1,7 +1,10 @@
 package com.spring.lease.web.admin.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spring.lease.model.entity.ViewAppointment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.spring.lease.web.admin.vo.appointment.AppointmentQueryVo;
+import com.spring.lease.web.admin.vo.appointment.AppointmentVo;
 
 /**
 * @author liubo
@@ -10,7 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.spring.lease.model.ViewAppointment
 */
 public interface ViewAppointmentMapper extends BaseMapper<ViewAppointment> {
-
+    IPage<AppointmentVo> pageAppointmentByQuery(IPage<AppointmentVo> page, AppointmentQueryVo queryVo)
 }
 
 

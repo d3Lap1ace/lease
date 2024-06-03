@@ -1,8 +1,13 @@
 package com.spring.lease.web.admin.controller.lease;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.lease.common.result.Result;
+import com.spring.lease.model.entity.ViewAppointment;
 import com.spring.lease.model.enums.AppointmentStatus;
+import com.spring.lease.web.admin.service.ViewAppointmentService;
 import com.spring.lease.web.admin.vo.appointment.AppointmentQueryVo;
 import com.spring.lease.web.admin.vo.appointment.AppointmentVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,15 +22,22 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ViewAppointmentController {
 
+    @Autowired
+    private ViewAppointmentService viewAppointmentService;
+
     @Operation(summary = "分页查询预约信息")
     @GetMapping("page")
     public Result<IPage<AppointmentVo>> page(@RequestParam long current, @RequestParam long size, AppointmentQueryVo queryVo) {
+        IPage<AppointmentVo> page = new Page<>(current,size);
+        IPage<AppointmentVo> list = viewAppointmentService.pageAppointmentByQuery(page, queryVo);
         return Result.ok();
     }
 
     @Operation(summary = "根据id更新预约状态")
     @PostMapping("updateStatusById")
     public Result updateStatusById(@RequestParam Long id, @RequestParam AppointmentStatus status) {
+        LambdaUpdateWrapper<ViewAppointment> viewAppointmentLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        viewAppointmentLambdaUpdateWrapper.eq(ViewAppointment::getId,id).set(ViewAppointment::getAppointmentStatus,status);
         return Result.ok();
     }
 
