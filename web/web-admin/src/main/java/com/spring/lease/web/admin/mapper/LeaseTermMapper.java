@@ -14,7 +14,7 @@ import java.util.List;
 */
 public interface LeaseTermMapper extends BaseMapper<LeaseTerm> {
 
-    List<LabelInfo> selectListByRoomId(Long id);
+    List<LeaseTerm> selectListByRoomId(Long id);
 }
 
 

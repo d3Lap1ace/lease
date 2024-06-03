@@ -4,7 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.lease.web.admin.mapper.LeaseTermMapper">
 
-    <select id="selectListByRoomId" resultType="com.spring.lease.model.entity.LabelInfo">
-
+    <select id="selectListByRoomId" resultType="com.spring.lease.model.entity.LeaseTerm">
+        select lt.id,
+               lt.month_count,
+               lt.unit
+        from lease_term lt
+                 inner join room_lease_term rlt on lt.id = rlt.lease_term_id
+        where rlt.room_id =#{roomid}
+          and rlt.is_deleted = 0
+          and lt.is_deleted = 0
     </select>
 </mapper>

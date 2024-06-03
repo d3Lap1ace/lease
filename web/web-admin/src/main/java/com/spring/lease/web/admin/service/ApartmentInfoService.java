@@ -14,8 +14,34 @@ import com.spring.lease.web.admin.vo.apartment.ApartmentSubmitVo;
 * @createDate 2023-07-24 15:48:00
 */
 public interface ApartmentInfoService extends IService<ApartmentInfo> {
+    /**
+     * 保存和更新公寓信息
+     * @param apartmentSubmitVo 封装了公寓信息
+     */
     void saveOrUpdateApartment(ApartmentSubmitVo apartmentSubmitVo);
-    void deleteApartmentById(Long id);
-    ApartmentDetailVo getApartmentDetilByid(Long id);
+
+    /**
+     *
+     * @param page 封装了当前页和每页显示的条数的page对象
+     * @param queryVo  封装了省、市、区id的查询条件的Vo对象
+     * @return
+     */
     IPage<ApartmentItemVo> pageApartmentItemByQuery(IPage<ApartmentItemVo> page, ApartmentQueryVo queryVo);
+
+    /**
+     * 根据公寓id查询公寓信息
+     * @param id
+     * @return
+     */
+    ApartmentDetailVo getApartmentDetilByid(Long id);
+
+
+    /**
+     * 根据公寓id删除公寓信息
+     * @param id
+     */
+    void deleteApartmentById(Long id);
+
+
+
 }

@@ -5,17 +5,16 @@
 <mapper namespace="com.spring.lease.web.admin.mapper.AttrValueMapper">
 
     <select id="selectListByRoomId" resultType="com.spring.lease.web.admin.vo.attr.AttrValueVo">
-        select v.id,
-               v.name,
-               v.attr_key_id,
-               k.name attr_key_name
-        from attr_value v
-                 join attr_key k on v.attr_key_id = k.id
-        where v.is_deleted = 0
-          and k.is_deleted = 0
-          and v.id in (select attr_value_id
-                       from room_attr_value
-                       where is_deleted = 0
-                         and room_id = #{id})
+        select av.id,
+               av.name,
+               av.attr_key_id,
+               ak.name attrKeyName
+        from attr_value av
+                 inner join attr_key ak on av.attr_key_id = ak.id
+                 inner join room_attr_value rav on av.id = rav.attr_value_id
+        where rav.room_id =#{roomid}
+          and rav.is_deleted = 0
+          and ak.is_deleted = 0
+          and av.is_deleted = 0
     </select>
 </mapper>

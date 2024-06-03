@@ -14,8 +14,31 @@ import com.spring.lease.web.admin.vo.room.RoomSubmitVo;
 * @createDate 2023-07-24 15:48:00
 */
 public interface RoomInfoService extends IService<RoomInfo> {
+    /**
+     *保存或更新房间信息
+     * @param roomSubmitVo
+     */
     void saveOrUpdateRoom(RoomSubmitVo roomSubmitVo);
+
+
+    /**
+     * 根据当前页和页表查询房间列表
+     * @param page 当前也
+     * @param queryVo 页表
+     * @return
+     */
     IPage<RoomItemVo> pageRoomItemByQuery(IPage<RoomItemVo> page, RoomQueryVo queryVo);
-    void removeRoomById(Long id);
+
+    /**
+     * 根据id查询房间详细信息
+     * @param id
+     * @return
+     */
     RoomDetailVo getRoomDetailById(Long id);
+
+    /**
+     * 根据id删除房间
+     * @param id
+     */
+    void removeRoomById(Long id);
 }

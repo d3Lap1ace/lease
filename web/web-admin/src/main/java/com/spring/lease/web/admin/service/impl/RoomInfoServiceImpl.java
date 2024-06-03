@@ -14,6 +14,7 @@ import com.spring.lease.web.admin.vo.room.RoomDetailVo;
 import com.spring.lease.web.admin.vo.room.RoomItemVo;
 import com.spring.lease.web.admin.vo.room.RoomQueryVo;
 import com.spring.lease.web.admin.vo.room.RoomSubmitVo;
+import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,21 +43,21 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoMapper, RoomInfo>
     private RoomPaymentTypeService roomPaymentTypeService;
     @Autowired
     private RoomLeaseTermService roomLeaseTermService;
-    @Autowired
+    @Resource
     private RoomInfoMapper roomInfoMapper;
-    @Autowired
+    @Resource
     private AttrValueMapper attrValueMapper;
-    @Autowired
+    @Resource
     private LabelInfoMapper labelInfoMapper;
-    @Autowired
+    @Resource
     private PaymentTypeMapper paymentTypeMapper;
-    @Autowired
+    @Resource
     private FacilityInfoMapper facilityInfoMapper;
-    @Autowired
+    @Resource
     private GraphInfoMapper graphInfoMapper;
-    @Autowired
+    @Resource
     private ApartmentInfoMapper apartmentInfoMapper;
-    @Autowired
+    @Resource
     private LeaseTermMapper leaseTermMapper;
 
 
@@ -65,105 +66,130 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoMapper, RoomInfo>
         Long id = roomSubmitVo.getId();  // 用于判断添加还是更新   获得room_info的主键id   getId()->rooSubmitVo->RoomInfo->BaseEntity.private Long id
         super.saveOrUpdate(roomSubmitVo); // 调用ServiceImpl.saveOrUpdate  用于CURD操作
         if(id != null){
-            // 1. 更新graphInfoList
-            List<GraphVo> graphVoList = roomSubmitVo.getGraphVoList(); // 获得图片列表
-            if(graphVoList != null && graphVoList.size() > 0){         // 列表不为空
-                ArrayList<GraphInfo> graphInfos = new ArrayList<>();   // 一个图片对象信息的列表
-                for (GraphInfo graphVo : graphInfos) {                 // 遍历赋值
-                    GraphInfo graphInfo = new GraphInfo();             // 创建一个图片对象
-                    graphInfo.setItemType(ItemType.ROOM);
-                    graphInfo.setItemId(roomSubmitVo.getId());
-                    graphInfo.setName(graphVo.getName());
-                    graphInfo.setUrl(graphVo.getUrl());
-                    graphInfos.add(graphInfo);
-                }
-                graphInfoService.saveBatch(graphInfos);      // 批量更新
-            }
-            // 2. 更新roomAttrValueList
-            List<Long> attrValueIds = roomSubmitVo.getAttrValueIds();
-            if(attrValueIds != null && attrValueIds.size() > 0){
-                List<RoomAttrValue> roomAttrValues = new ArrayList<>();
-                for (Long attrValueId : attrValueIds) {
-                    RoomAttrValue roomAttrValue = RoomAttrValue.builder().roomId(roomSubmitVo.getId()).attrValueId(attrValueId).build();
-                    roomAttrValues.add(roomAttrValue);
-                }
-                roomAttrValueService.saveBatch(roomAttrValues);
-            }
-            // 3. 更新facilityInfoList
-            List<Long> facilityInfoIds = roomSubmitVo.getFacilityInfoIds();
-            if(facilityInfoIds != null && facilityInfoIds.size() > 0){
-                List<RoomFacility> roomFacilities = new ArrayList<>();
-                for (Long facilityInfoId : facilityInfoIds) {
-                    RoomFacility roomFacility = RoomFacility.builder().roomId(roomSubmitVo.getId()).facilityId(facilityInfoId).build();
-                    roomFacilities.add(roomFacility);
-                }
-                roomFacilityService.saveBatch(roomFacilities);
-            }
-            // 4. 更新labelInfoList
-            List<Long> labelInfoIds = roomSubmitVo.getLabelInfoIds();
-            if (!CollectionUtils.isEmpty(labelInfoIds)) {
-                ArrayList<RoomLabel> roomLabelList = new ArrayList<>();
-                for (Long labelInfoId : labelInfoIds) {
-                    RoomLabel roomLabel = RoomLabel.builder().roomId(roomSubmitVo.getId()).labelId(labelInfoId).build();
-                    roomLabelList.add(roomLabel);
-                }
-                roomLabelService.saveBatch(roomLabelList);
-            }
-            // 5. 更新paymentTypeList
-            List<Long> paymentTypeIds = roomSubmitVo.getPaymentTypeIds();
-            if (!CollectionUtils.isEmpty(paymentTypeIds)) {
-                ArrayList<RoomPaymentType> roomPaymentTypeList = new ArrayList<>();
-                for (Long paymentTypeId : paymentTypeIds) {
-                    RoomPaymentType roomPaymentType = RoomPaymentType.builder().roomId(roomSubmitVo.getId()).paymentTypeId(paymentTypeId).build();
-                    roomPaymentTypeList.add(roomPaymentType);
-                }
-                roomPaymentTypeService.saveBatch(roomPaymentTypeList);
-            }
-            // 6. 更新leaseTermList
-            List<Long> leaseTermIds = roomSubmitVo.getLeaseTermIds();
-            if (!CollectionUtils.isEmpty(leaseTermIds)) {
-                ArrayList<RoomLeaseTerm> roomLeaseTerms = new ArrayList<>();
-                for (Long leaseTermId : leaseTermIds) {
-                    RoomLeaseTerm roomLeaseTerm = RoomLeaseTerm.builder().roomId(roomSubmitVo.getId()).leaseTermId(leaseTermId).build();
-                    roomLeaseTerms.add(roomLeaseTerm);
-                }
-                roomLeaseTermService.saveBatch(roomLeaseTerms);
-            }
+            // 1. 删除原有graphInfoList
+            LambdaQueryWrapper<GraphInfo> graphInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            // 封装对象
+            graphInfoLambdaQueryWrapper.eq(GraphInfo::getItemId,id);
+            graphInfoLambdaQueryWrapper.eq(GraphInfo::getItemType, ItemType.ROOM);
+            graphInfoService.remove(graphInfoLambdaQueryWrapper);
+            // 2. 删除原有roomAttrValueList
+            LambdaQueryWrapper<RoomAttrValue> roomAttrValueLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            // 封装对象
+            roomAttrValueLambdaQueryWrapper.eq(RoomAttrValue::getRoomId,id);
+            roomAttrValueService.remove(roomAttrValueLambdaQueryWrapper);
+            // 3. 删除原有roomFacilityInfoList
+            LambdaQueryWrapper<RoomFacility> facilityInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            // 封装对象
+            facilityInfoLambdaQueryWrapper.eq(RoomFacility::getRoomId, id);
+            roomFacilityService.remove(facilityInfoLambdaQueryWrapper);
+            // 4. 删除原有roomLabelInfoList
+            LambdaQueryWrapper<RoomLabel> roomLabelLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            // 封装对象
+            roomLabelLambdaQueryWrapper.eq(RoomLabel::getRoomId, id);
+            roomLabelService.remove(roomLabelLambdaQueryWrapper);
+            // 5. 删除原有roomPaymentTypeList
+            LambdaQueryWrapper<RoomPaymentType> roomPaymentTypeLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            // 封装对象
+            roomPaymentTypeLambdaQueryWrapper.eq(RoomPaymentType::getRoomId, id);
+            roomPaymentTypeService.remove(roomPaymentTypeLambdaQueryWrapper);
+            // 6. 删除原有roomLeaseTermList
+            LambdaQueryWrapper<RoomLeaseTerm> roomLeaseTermLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            // 封装对象
+            roomLeaseTermLambdaQueryWrapper.eq(RoomLeaseTerm::getRoomId, id);
+            roomLeaseTermService.remove(roomLeaseTermLambdaQueryWrapper);
         }
-        // 1. 删除原有graphInfoList
-        LambdaQueryWrapper<GraphInfo> graphInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        graphInfoLambdaQueryWrapper.eq(GraphInfo::getItemId,id);
-        graphInfoLambdaQueryWrapper.eq(GraphInfo::getItemType, ItemType.ROOM);
-        graphInfoService.remove(graphInfoLambdaQueryWrapper);
-        // 2. 删除原有roomAttrValueList
-        LambdaQueryWrapper<RoomAttrValue> roomAttrValueLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        roomAttrValueLambdaQueryWrapper.eq(RoomAttrValue::getRoomId,id);
-        roomAttrValueService.remove(roomAttrValueLambdaQueryWrapper);
-        // 3. 删除原有roomfacilityInfoList
-        LambdaQueryWrapper<RoomFacility> facilityInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        facilityInfoLambdaQueryWrapper.eq(RoomFacility::getRoomId, id);
-        roomFacilityService.remove(facilityInfoLambdaQueryWrapper);
-        // 4. 删除原有roomlabelInfoList
-        LambdaQueryWrapper<RoomLabel> roomLabelLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        roomLabelLambdaQueryWrapper.eq(RoomLabel::getRoomId, id);
-        roomLabelService.remove(roomLabelLambdaQueryWrapper);
-        // 5. 删除原有paymentTypeList
-        LambdaQueryWrapper<RoomPaymentType> roomPaymentTypeLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        roomPaymentTypeLambdaQueryWrapper.eq(RoomPaymentType::getRoomId, id);
-        roomPaymentTypeService.remove(roomPaymentTypeLambdaQueryWrapper);
-        // 6. 删除原有leaseTermList
-        LambdaQueryWrapper<RoomLeaseTerm> roomLeaseTermLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        roomLeaseTermLambdaQueryWrapper.eq(RoomLeaseTerm::getRoomId, id);
-        roomLeaseTermService.remove(roomLeaseTermLambdaQueryWrapper);
+        // 1. 更新graphInfoList
+        List<GraphVo> graphVoList = roomSubmitVo.getGraphVoList(); // 获得图片列表
+        if(graphVoList != null && graphVoList.size() > 0){         // 列表不为空
+            ArrayList<GraphInfo> graphInfos = new ArrayList<>();   // 一个图片对象信息的列表
+            for (GraphInfo graphVo : graphInfos) {                 // 遍历赋值
+                GraphInfo graphInfo = new GraphInfo();             // 创建一个图片对象
+                graphInfo.setItemType(ItemType.ROOM);
+                graphInfo.setItemId(id);
+                graphInfo.setName(graphVo.getName());
+                graphInfo.setUrl(graphVo.getUrl());
+                graphInfos.add(graphInfo);                          // 加入列表
+            }
+            graphInfoService.saveBatch(graphInfos);      // 批量更新
+        }
+        // 2. 更新roomAttrValueList
+        List<Long> attrValueIds = roomSubmitVo.getAttrValueIds();  // 获得属性列表
+        if(attrValueIds != null && attrValueIds.size() > 0){        // 列表不为空
+            List<RoomAttrValue> roomAttrValues = new ArrayList<>(); // 创建房间属性对象列表
+            for (Long attrValueId : attrValueIds) {                // 遍历赋值
+                RoomAttrValue roomAttrValue = RoomAttrValue.builder()
+                        .roomId(id)
+                        .attrValueId(attrValueId)
+                        .build();
+                roomAttrValues.add(roomAttrValue);             // 加入列表
+            }
+            roomAttrValueService.saveBatch(roomAttrValues); // 批量更新
+        }
+        // 3. 更新facilityInfoList
+        List<Long> facilityInfoIds = roomSubmitVo.getFacilityInfoIds(); // 获得配套信息
+        if(facilityInfoIds != null && facilityInfoIds.size() > 0){
+            List<RoomFacility> roomFacilities = new ArrayList<>();      // 创建 房间配套 对象列表
+            for (Long facilityInfoId : facilityInfoIds) {               // 遍历赋值
+                RoomFacility roomFacility = RoomFacility.builder()
+                        .roomId(id)
+                        .facilityId(facilityInfoId)
+                        .build();
+                roomFacilities.add(roomFacility);
+            }
+            roomFacilityService.saveBatch(roomFacilities);              // 批量更新
+        }
+        // 4. 更新labelInfoList
+        List<Long> labelInfoIds = roomSubmitVo.getLabelInfoIds();  // 获得标签信息
+        if (!CollectionUtils.isEmpty(labelInfoIds)) {
+            ArrayList<RoomLabel> roomLabelList = new ArrayList<>();  // 创建 房间标签 对象列表
+            for (Long labelInfoId : labelInfoIds) {                 // 遍历赋值
+                RoomLabel roomLabel = RoomLabel.builder()
+                        .roomId(id)
+                        .labelId(labelInfoId)
+                        .build();
+                roomLabelList.add(roomLabel);                    // 添加roomLable到列表
+            }
+            roomLabelService.saveBatch(roomLabelList);          // 批量更新
+        }
+        // 5. 更新paymentTypeList
+        List<Long> paymentTypeIds = roomSubmitVo.getPaymentTypeIds();   // 获得支付信息列表
+        if (!CollectionUtils.isEmpty(paymentTypeIds)) {
+            ArrayList<RoomPaymentType> roomPaymentTypeList = new ArrayList<>(); // 创建 房间支付 对象列表
+            for (Long paymentTypeId : paymentTypeIds) {                         // 遍历赋值
+                RoomPaymentType roomPaymentType = RoomPaymentType.builder()
+                        .roomId(id)
+                        .paymentTypeId(paymentTypeId)
+                        .build();
+                roomPaymentTypeList.add(roomPaymentType);                        // 添加roomPaymentType到列表
+            }
+            roomPaymentTypeService.saveBatch(roomPaymentTypeList);              // 批量更新
+        }
+        // 6. 更新leaseTermList
+        List<Long> leaseTermIds = roomSubmitVo.getLeaseTermIds();           // 获得租期信息列表
+        if (!CollectionUtils.isEmpty(leaseTermIds)) {
+            ArrayList<RoomLeaseTerm> roomLeaseTerms = new ArrayList<>();     // 创建 房间租期 对象列表
+            for (Long leaseTermId : leaseTermIds) {                         // 遍历赋值
+                RoomLeaseTerm roomLeaseTerm = RoomLeaseTerm.builder()
+                        .roomId(id)
+                        .leaseTermId(leaseTermId)
+                        .build();
+                roomLeaseTerms.add(roomLeaseTerm);                          // 添加roomLeaseTerm到列表
+            }
+            roomLeaseTermService.saveBatch(roomLeaseTerms);                 // 批量更新
+        }
     }
+
 
     @Override
     public IPage<RoomItemVo> pageRoomItemByQuery(IPage<RoomItemVo> page, RoomQueryVo queryVo) {
-        return roomInfoMapper.pageRoomItemByQuery(page, queryVo);
+        return baseMapper.pageRoomItemByQuery(page, queryVo);
     }
 
     @Override
     public void removeRoomById(Long id) {
+        //1.删除RoomInfo
+        baseMapper.deleteById(id);
+
         // 1. 删除原有graphInfoList
         LambdaQueryWrapper<GraphInfo> graphInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
         graphInfoLambdaQueryWrapper.eq(GraphInfo::getItemId,id);
@@ -181,11 +207,11 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoMapper, RoomInfo>
         LambdaQueryWrapper<RoomLabel> roomLabelLambdaQueryWrapper = new LambdaQueryWrapper<>();
         roomLabelLambdaQueryWrapper.eq(RoomLabel::getRoomId, id);
         roomLabelService.remove(roomLabelLambdaQueryWrapper);
-        // 5. 删除原有paymentTypeList
+        // 5. 删除原有roompaymentTypeList
         LambdaQueryWrapper<RoomPaymentType> roomPaymentTypeLambdaQueryWrapper = new LambdaQueryWrapper<>();
         roomPaymentTypeLambdaQueryWrapper.eq(RoomPaymentType::getRoomId, id);
         roomPaymentTypeService.remove(roomPaymentTypeLambdaQueryWrapper);
-        // 6. 删除原有leaseTermList
+        // 6. 删除原有roomleaseTermList
         LambdaQueryWrapper<RoomLeaseTerm> roomLeaseTermLambdaQueryWrapper = new LambdaQueryWrapper<>();
         roomLeaseTermLambdaQueryWrapper.eq(RoomLeaseTerm::getRoomId, id);
         roomLeaseTermService.remove(roomLeaseTermLambdaQueryWrapper);
@@ -193,14 +219,15 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoMapper, RoomInfo>
 
     @Override
     public RoomDetailVo getRoomDetailById(Long id) {
+
         //1.查询RoomInfo
-        RoomInfo roomInfo = roomInfoMapper.selectById(id);
+        RoomInfo roomInfo = baseMapper.selectById(id);
 
         //2.查询所属公寓信息
         ApartmentInfo apartmentInfo = apartmentInfoMapper.selectById(roomInfo.getApartmentId());
 
         //3.查询graphInfoList
-        List<GraphVo> graphVoList = graphInfoMapper.selectListByItemTypeAndId(ItemType.ROOM, id);
+        List<GraphVo> graphVoList = graphInfoMapper.selectRoomListByItemTypeAndId(ItemType.ROOM,id);
 
         //4.查询attrValueList
         List<AttrValueVo> attrvalueVoList = attrValueMapper.selectListByRoomId(id);

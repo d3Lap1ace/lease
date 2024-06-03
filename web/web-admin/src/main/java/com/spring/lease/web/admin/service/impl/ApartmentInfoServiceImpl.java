@@ -15,6 +15,7 @@ import com.spring.lease.web.admin.vo.apartment.ApartmentQueryVo;
 import com.spring.lease.web.admin.vo.apartment.ApartmentSubmitVo;
 import com.spring.lease.web.admin.vo.fee.FeeValueVo;
 import com.spring.lease.web.admin.vo.graph.GraphVo;
+import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,21 +43,23 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
     private GraphInfoService graphInfoService;
     @Autowired
     private RoomInfoService roomInfoService;
-    @Autowired
+    @Resource
+    private ApartmentInfoMapper apartmentInfoMapper;
+    @Resource
     private GraphInfoMapper graphInfoMapper;
-    @Autowired
+    @Resource
     private LabelInfoMapper labelInfoMapper;
-    @Autowired
+    @Resource
     private FacilityInfoMapper facilityInfoMapper;
-    @Autowired
+    @Resource
     private FeeValueMapper feeValueMapper;
 
 
     @Override
     public void saveOrUpdateApartment(ApartmentSubmitVo apartmentSubmitVo) {
-        // 保存公寓信息
+        // 保存公寓信息进行curd操作
         super.saveOrUpdate(apartmentSubmitVo);
-        // 判断是在添加还是更新
+        // 判断是在添加还是更新 ApartmentSubmitVo->ApartmentInfo->BaseEntity
         Long id = apartmentSubmitVo.getId();
         if(id != null){
             // 更新公寓信息
@@ -219,23 +222,26 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
         List<FeeValueVo> feeValueVoList = feeValueMapper.selectListByApartmentId(id);
 
         // 生成公寓详细信息对象
-        ApartmentDetailVo adminApartmentDetailVo = new ApartmentDetailVo();
+        ApartmentDetailVo apartmentDetailVo = new ApartmentDetailVo();
 
         //将adminPartmentDetailVo的属性复制给apartmentInfo
-        BeanUtils.copyProperties(apartmentInfo, adminApartmentDetailVo);
+        BeanUtils.copyProperties(apartmentInfo, apartmentDetailVo);
+        // 设置图片列表
+        apartmentDetailVo.setGraphVoList(graphVoList);
+        // 设置标签列表
+        apartmentDetailVo.setLabelInfoList(labelInfoList);
+        // 设置配套列表
+        apartmentDetailVo.setFacilityInfoList(facilityInfoList);
+        // 设置杂费列表
+        apartmentDetailVo.setFeeValueVoList(feeValueVoList);
 
-        adminApartmentDetailVo.setGraphVoList(graphVoList);
-        adminApartmentDetailVo.setLabelInfoList(labelInfoList);
-        adminApartmentDetailVo.setFacilityInfoList(facilityInfoList);
-        adminApartmentDetailVo.setFeeValueVoList(feeValueVoList);
-
-        return adminApartmentDetailVo;
+        return apartmentDetailVo;
     }
 
     @Override
     public IPage<ApartmentItemVo> pageApartmentItemByQuery(IPage<ApartmentItemVo> page, ApartmentQueryVo queryVo) {
 
-        return ApartmentInfoMapper.pageApartmentItemByQuery(page,queryVo);
+        return apartmentInfoMapper.pageApartmentItemByQuery(page,queryVo);
     }
 }
 

@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan("com.spring.lease.web.*.mapper")
 public class MybatisPlusConfiguration {
+    // 分页查询
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();

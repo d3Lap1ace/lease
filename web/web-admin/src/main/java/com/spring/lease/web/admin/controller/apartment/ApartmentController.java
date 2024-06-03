@@ -7,10 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.lease.common.result.Result;
 import com.spring.lease.model.entity.ApartmentInfo;
 import com.spring.lease.model.enums.ReleaseStatus;
-import com.spring.lease.web.admin.service.ApartmentFacilityService;
-import com.spring.lease.web.admin.service.ApartmentFeeValueService;
 import com.spring.lease.web.admin.service.ApartmentInfoService;
-import com.spring.lease.web.admin.service.ApartmentLabelService;
 import com.spring.lease.web.admin.vo.apartment.ApartmentDetailVo;
 import com.spring.lease.web.admin.vo.apartment.ApartmentItemVo;
 import com.spring.lease.web.admin.vo.apartment.ApartmentQueryVo;
@@ -18,7 +15,6 @@ import com.spring.lease.web.admin.vo.apartment.ApartmentSubmitVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

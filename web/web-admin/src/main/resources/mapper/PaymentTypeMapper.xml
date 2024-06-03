@@ -5,16 +5,14 @@
 <mapper namespace="com.spring.lease.web.admin.mapper.PaymentTypeMapper">
 
     <select id="selectListByRoomId" resultType="com.spring.lease.model.entity.PaymentType">
-        select id,
-               name,
-               pay_month_count,
-               additional_info
-        from payment_type
-        where is_deleted = 0
-          and id in
-              (select payment_type_id
-               from room_payment_type
-               where is_deleted = 0
-                 and room_id = #{id})
+        select pt.id,
+               pt.name,
+               pt.pay_month_count,
+               pt.additional_info
+        from payment_type pt
+                 inner join room_payment_type rpt on pt.id = rpt.payment_type_id
+        where rpt.room_id = #{roomid}
+          and rpt.is_deleted = 0
+          and pt.is_deleted = 0
     </select>
 </mapper>

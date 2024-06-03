@@ -4,18 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.lease.web.admin.mapper.FeeValueMapper">
     <select id="selectListByApartmentId" resultType="com.spring.lease.web.admin.vo.fee.FeeValueVo">
-        SELECT fv.id,
-               fv.name,
-               fv.unit,
-               fv.fee_key_id,
-               fk.name AS fee_key_name
-        FROM fee_value fv
-                 JOIN fee_key fk ON fv.fee_key_id = fk.id
-        WHERE fv.is_deleted = 0
-          AND fk.is_deleted = 0
-          and fv.id in (select fee_value_id
-                        from apartment_fee_value
-                        where is_deleted = 0
-                          and apartment_id = #{id})
+        select fv.id,fv.name,fv.unit,fv.fee_key_id,fk.name feeKeyName
+        from fee_value fv
+                 inner join fee_key fk
+                            on fv.fee_key_id = fk.id
+                 inner join apartment_fee_value afv
+                            on fv.id = afv.fee_value_id
+        where afv.apartment_id = 9
+          and afv.is_deleted = 0
+          and fk.is_deleted = 0
+          and fv.is_deleted = 0;
     </select>
 </mapper>
