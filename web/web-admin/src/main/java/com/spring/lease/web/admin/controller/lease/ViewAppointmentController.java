@@ -37,7 +37,8 @@ public class ViewAppointmentController {
     @PostMapping("updateStatusById")
     public Result updateStatusById(@RequestParam Long id, @RequestParam AppointmentStatus status) {
         LambdaUpdateWrapper<ViewAppointment> viewAppointmentLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
-        viewAppointmentLambdaUpdateWrapper.eq(ViewAppointment::getId,id).set(ViewAppointment::getAppointmentStatus,status);
+        viewAppointmentLambdaUpdateWrapper.eq(ViewAppointment::getId,id)
+                .set(ViewAppointment::getAppointmentStatus,status);
         return Result.ok();
     }
 

@@ -60,7 +60,8 @@ public class LeaseAgreementController {
     @PostMapping("updateStatusById")
     public Result updateStatusById(@RequestParam Long id, @RequestParam LeaseStatus status) {
         LambdaUpdateWrapper<LeaseAgreement> leaseAgreementLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
-        leaseAgreementLambdaUpdateWrapper.eq(LeaseAgreement::getId,id).set(LeaseAgreement::getStatus,status);
+        leaseAgreementLambdaUpdateWrapper.eq(LeaseAgreement::getId,id)
+                .set(LeaseAgreement::getStatus,status);
         leaseAgreementService.update(leaseAgreementLambdaUpdateWrapper);
         return Result.ok();
     }

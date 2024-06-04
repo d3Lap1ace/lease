@@ -61,8 +61,8 @@ public class RoomController {
     @PostMapping("updateReleaseStatusById")
     public Result updateReleaseStatusById(Long id, ReleaseStatus status) {
         LambdaUpdateWrapper<RoomInfo> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.eq(RoomInfo::getId, id);
-        updateWrapper.set(RoomInfo::getIsRelease, status);
+        updateWrapper.eq(RoomInfo::getId, id)
+                .set(RoomInfo::getIsRelease, status);
         roomInfoService.update(updateWrapper);
         return Result.ok();
     }
@@ -71,8 +71,9 @@ public class RoomController {
     @Operation(summary = "根据公寓id查询房间列表")
     public Result<List<RoomInfo>> listBasicByApartmentId(Long id) {
         LambdaQueryWrapper<RoomInfo> roomInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        roomInfoLambdaQueryWrapper.eq(RoomInfo::getApartmentId, id);
-        roomInfoLambdaQueryWrapper.eq(RoomInfo::getIsRelease,ReleaseStatus.RELEASED);
+        roomInfoLambdaQueryWrapper
+                .eq(RoomInfo::getApartmentId, id)
+                .eq(RoomInfo::getIsRelease, ReleaseStatus.RELEASED);
         List<RoomInfo> list = roomInfoService.list(roomInfoLambdaQueryWrapper);
         return Result.ok(list);
     }

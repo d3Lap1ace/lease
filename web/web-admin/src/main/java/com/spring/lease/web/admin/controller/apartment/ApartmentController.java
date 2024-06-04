@@ -65,8 +65,8 @@ public class ApartmentController {
     @PostMapping("updateReleaseStatusById")
     public Result updateReleaseStatusById(@RequestParam Long id, @RequestParam ReleaseStatus status) {
         LambdaUpdateWrapper<ApartmentInfo> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.eq(ApartmentInfo::getId, id);
-        updateWrapper.set(ApartmentInfo::getIsRelease, status);
+        updateWrapper.eq(ApartmentInfo::getId, id)
+                .set(ApartmentInfo::getIsRelease, status);
         apartmentInfoService.update(updateWrapper);
         return Result.ok();
     }
@@ -80,17 +80,3 @@ public class ApartmentController {
         return Result.ok();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

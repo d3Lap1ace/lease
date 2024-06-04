@@ -21,18 +21,17 @@ import java.util.List;
 public class LabelController {
 
     @Autowired
-    private LabelInfoService service;
+    private LabelInfoService labelInfoService;
 
     @Operation(summary = "（根据类型）查询标签列表")
     @GetMapping("list")
     // ItemType 是枚举类型
     public Result<List<LabelInfo>> labelList(@RequestParam(required = false) ItemType type) {
-        QueryWrapper<LabelInfo> labelInfoQueryWrapper = new QueryWrapper<>();
-        labelInfoQueryWrapper.eq(type!=null,"type",type.getCode());
-        List<LabelInfo> list = service.list(labelInfoQueryWrapper);
-//        LambdaQueryWrapper<LabelInfo> labelInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
-//        labelInfoLambdaQueryWrapper.eq(type != null,LabelInfo::getType,type);
-//        List<LabelInfo> list = service.list(labelInfoLambdaQueryWrapper);
+
+        LambdaQueryWrapper<LabelInfo> labelInfoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        labelInfoLambdaQueryWrapper.eq(type != null,LabelInfo::getType,type);
+        List<LabelInfo> list = labelInfoService.list(labelInfoLambdaQueryWrapper);
+
         return Result.ok(list);
 
     }
@@ -40,14 +39,14 @@ public class LabelController {
     @Operation(summary = "新增或修改标签信息")
     @PostMapping("saveOrUpdate")
     public Result saveOrUpdateLabel(@RequestBody LabelInfo labelInfo) {
-        service.saveOrUpdate(labelInfo);
+        labelInfoService.saveOrUpdate(labelInfo);
         return Result.ok();
     }
 
     @Operation(summary = "根据id删除标签信息")
     @DeleteMapping("deleteById")
     public Result deleteLabelById(@RequestParam Long id) {
-        service.removeById(id);
+        labelInfoService.removeById(id);
         return Result.ok();
     }
 }
