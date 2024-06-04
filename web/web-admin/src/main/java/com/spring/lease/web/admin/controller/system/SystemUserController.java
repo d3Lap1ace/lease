@@ -77,4 +77,5 @@ public class SystemUserController {
         systemUserService.update(systemUserLambdaUpdateWrapper);
         return Result.ok();
     }
+
 }

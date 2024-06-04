@@ -15,9 +15,15 @@ spring:
       maximum-pool-size: 12 #连接池最大连接数，默认是10
       minimum-idle: 10 #最小空闲连接数量
       pool-name: SPHHikariPool # 连接池名称
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
+  jackson:      # json输出
+    date-format: yyyy-MM-dd HH:mm:ss   #设置json时间输出格式
+    time-zone: GMT+8                   #设置json时间区域
+
+  data:       # 数据
+    redis:    # redis设置
+      host: 192.168.1.2
+      port: 6379
+      database: 0
 
 #用于打印框架生成的sql语句，便于调试
 mybatis-plus:
@@ -30,7 +36,7 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
 
-minio:
+minio:  # minio
   endpoint: http://192.168.1.2:9000
   access-key: minioadmin
   secret-key: minioadmin
@@ -38,4 +44,8 @@ minio:
 springdoc:
   default-flat-param-object: true
 
-
+admin:  #增加拦截器匹配和排除的接口路径
+  auth:
+    path-patterns:
+      include: /admin/**
+      exclude: /admin/login/**
