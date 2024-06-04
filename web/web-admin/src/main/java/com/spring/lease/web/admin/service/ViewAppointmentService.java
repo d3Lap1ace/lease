@@ -13,5 +13,11 @@ import com.spring.lease.web.admin.vo.appointment.AppointmentVo;
 */
 public interface ViewAppointmentService extends IService<ViewAppointment> {
 
+    /**
+     * 分页查询预约信息
+     * @param page
+     * @param queryVo
+     * @return
+     */
     IPage<AppointmentVo> pageAppointmentByQuery(IPage<AppointmentVo> page, AppointmentQueryVo queryVo);
 }

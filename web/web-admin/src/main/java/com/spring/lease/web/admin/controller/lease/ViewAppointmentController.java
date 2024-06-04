@@ -30,7 +30,7 @@ public class ViewAppointmentController {
     public Result<IPage<AppointmentVo>> page(@RequestParam long current, @RequestParam long size, AppointmentQueryVo queryVo) {
         IPage<AppointmentVo> page = new Page<>(current,size);
         IPage<AppointmentVo> list = viewAppointmentService.pageAppointmentByQuery(page, queryVo);
-        return Result.ok();
+        return Result.ok(list);
     }
 
     @Operation(summary = "根据id更新预约状态")

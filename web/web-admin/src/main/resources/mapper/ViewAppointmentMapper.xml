@@ -53,10 +53,10 @@
             <if test="queryVo.apartmentId != null">
                 and va.apartment_Id = #{queryVo.apartmentId}
             </if>
-            <if test="queryVo.name != null">
+            <if test="queryVo.name != null and queryVo.name != '' ">
                 and va.name like "%"#{queryVo.name}"%"
             </if>
-            <if test="queryVo.phone != null">
+            <if test="queryVo.phone != null and queryVo.phone != '' ">
                 and va.phone like "%"#{queryVo.phone}"%"
             </if>
         </where>

@@ -1,7 +1,10 @@
 package com.spring.lease.web.admin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spring.lease.model.entity.LeaseAgreement;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spring.lease.web.admin.vo.agreement.AgreementQueryVo;
+import com.spring.lease.web.admin.vo.agreement.AgreementVo;
 
 /**
 * @author liubo
@@ -10,4 +13,19 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface LeaseAgreementService extends IService<LeaseAgreement> {
 
+    /**
+     * 根据当前页和分页进行分页查询
+     * @param page
+     * @param queryVo
+     * @return
+     */
+    IPage<AgreementVo> pageAgreementByQuery(IPage<AgreementVo> page, AgreementQueryVo queryVo);
+
+
+    /**
+     * 根据id查询租约信息
+     * @param id
+     * @return
+     */
+    AgreementVo getAgreementVoByid(Long id);
 }

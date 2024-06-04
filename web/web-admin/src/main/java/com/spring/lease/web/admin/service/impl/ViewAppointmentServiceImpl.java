@@ -22,6 +22,14 @@ public class ViewAppointmentServiceImpl extends ServiceImpl<ViewAppointmentMappe
 
     @Resource
     private ViewAppointmentMapper viewAppointmentMapper;
+
+
+    /**
+     * 实现 分页查询预约信息
+     * @param page
+     * @param queryVo
+     * @return
+     */
     @Override
     public IPage<AppointmentVo> pageAppointmentByQuery(IPage<AppointmentVo> page, AppointmentQueryVo queryVo) {
         return viewAppointmentMapper.pageAppointmentByQuery(page, queryVo);
