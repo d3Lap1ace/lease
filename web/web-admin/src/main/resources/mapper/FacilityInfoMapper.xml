@@ -8,7 +8,7 @@
         from facility_info fi
                  inner join apartment_facility af
                             on fi.id = af.facility_id
-        where af.apartment_id = #{apartmentId}
+        where af.apartment_id = #{id}
           and af.is_deleted = 0
           and fi.is_deleted = 0;
     </select>

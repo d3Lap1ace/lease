@@ -6,8 +6,8 @@
     <select id="selectListByItemTypeAndId" resultType="com.spring.lease.web.admin.vo.graph.GraphVo">
         select name,url
         from graph_info
-        where item_type = #{type}
-          and item_id = #{apartmentId}
+        where item_type = #{itemType}
+          and item_id = #{itemId}
           and is_deleted = 0;
     </select>
     <select id="selectRoomListByItemTypeAndId" resultType="com.spring.lease.web.admin.vo.graph.GraphVo">

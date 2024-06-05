@@ -156,6 +156,7 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
             }
             graphInfoService.saveBatch(graphInfoList);
         }
+
     }
 
     @Override
@@ -209,11 +210,11 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
         ApartmentInfo apartmentInfo = this.getById(id);
         if(apartmentInfo == null){return null;}
 
-        // 查询LabelInfo
-        List<LabelInfo> labelInfoList = labelInfoMapper.selectListByApartmentId(id);
-
         // 查询GraphInfo
         List<GraphVo> graphVoList = graphInfoMapper.selectListByItemTypeAndId(ItemType.APARTMENT,id);
+
+        // 查询LabelInfo
+        List<LabelInfo> labelInfoList = labelInfoMapper.selectListByApartmentId(id);
 
         // 查询FacilInfo
         List<FacilityInfo> facilityInfoList = facilityInfoMapper.selectListByApartmentId(id);

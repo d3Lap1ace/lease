@@ -10,8 +10,6 @@ import java.util.Date;
 
 @Data
 public class BaseEntity implements Serializable {
-
-    @JsonIgnore
     @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

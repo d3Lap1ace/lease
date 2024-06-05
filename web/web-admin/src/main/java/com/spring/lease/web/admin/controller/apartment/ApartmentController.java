@@ -79,6 +79,6 @@ public class ApartmentController {
         LambdaQueryWrapper<ApartmentInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ApartmentInfo::getDistrictId, id);
         List<ApartmentInfo> list = apartmentInfoService.list(queryWrapper);
-        return Result.ok();
+        return Result.ok(list);
     }
 }

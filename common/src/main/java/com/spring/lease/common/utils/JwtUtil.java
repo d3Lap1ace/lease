@@ -2,6 +2,7 @@ package com.spring.lease.common.utils;
 
 import com.spring.lease.common.exception.LeaseException;
 import com.spring.lease.common.result.ResultCodeEnum;
+import com.spring.lease.model.entity.SystemUser;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
@@ -19,20 +20,24 @@ import java.util.Date;
 
 
 public class JwtUtil {
-    private static long tokenExpiration = 60 * 60 * 1000L;
+    private static long tokenExpiration = 60 * 600 * 1000L;
+
+    // 密钥
     private static SecretKey tokenSignKey = Keys.hmacShaKeyFor("M0PKKI6pYGVWWfDZw90a0lTpGYX1d4AQ".getBytes());
 
     public static String createToken(Long userId, String username) {
-        String token = Jwts.builder().
-                setSubject("USER_INFO").
-                setExpiration(new Date(System.currentTimeMillis() + tokenExpiration)).
-                claim("userId", userId).
-                claim("username", username).
-                signWith(tokenSignKey).
-                compressWith(CompressionCodecs.GZIP).
+        String token = Jwts.builder()
+                .setSubject("USER_INFO")
+                .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration))
+                .claim("userId", userId)
+                .claim("username", username)
+                .signWith(tokenSignKey)
+                .compressWith(CompressionCodecs.GZIP).
                 compact();
+
         return token;
     }
+
 
     public static Claims parseToken(String token) {
         try {

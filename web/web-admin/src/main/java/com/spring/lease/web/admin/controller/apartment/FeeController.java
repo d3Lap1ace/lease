@@ -46,7 +46,7 @@ public class FeeController {
     @GetMapping("list")
     public Result<List<FeeKeyVo>> feeInfoList() {
         List<FeeKeyVo>list = feeKeyService.listFeeInfo();
-        return Result.ok();
+        return Result.ok(list);
     }
 
     @Operation(summary = "根据id删除杂费名称")

@@ -9,7 +9,7 @@
         from label_info li
                  inner join apartment_label al
                             on li.id = al.label_id
-        where al.apartment_id = #{apartmentId}
+        where al.apartment_id = #{id}
           and al.is_deleted = 0
           and li.is_deleted = 0;
     </select>

@@ -5,6 +5,7 @@ import com.spring.lease.web.admin.mapper.FeeKeyMapper;
 import com.spring.lease.web.admin.service.FeeKeyService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring.lease.web.admin.vo.fee.FeeKeyVo;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class FeeKeyServiceImpl extends ServiceImpl<FeeKeyMapper, FeeKey>
     implements FeeKeyService{
 
-    @Autowired
+    @Resource
     private FeeKeyMapper feeKeyMapper;
     @Override
     public List<FeeKeyVo> listFeeInfo() {

@@ -37,8 +37,7 @@ public class LoginController {
 
     @Operation(summary = "获取登陆用户个人信息")
     @GetMapping("info")
-    public Result<SystemUserInfoVo> info(@RequestHeader("access_token") String token) {
-        Long id = JwtUtil.parseToken(token).get("userId",Long.class);
+    public Result<SystemUserInfoVo> info() {
         SystemUserInfoVo user = loginService.getSystemUserInfoById(LoginUserContext.getLoginUser().getUserId());
         return Result.ok(user);
     }

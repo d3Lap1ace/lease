@@ -10,7 +10,7 @@
                             on fv.fee_key_id = fk.id
                  inner join apartment_fee_value afv
                             on fv.id = afv.fee_value_id
-        where afv.apartment_id = 9
+        where afv.apartment_id = #{id}
           and afv.is_deleted = 0
           and fk.is_deleted = 0
           and fv.is_deleted = 0;
