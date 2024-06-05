@@ -84,6 +84,11 @@ public class LoginServiceImpl implements LoginService {
         return JwtUtil.createToken(userInfo.getId(), loginVo.getPhone());
     }
 
+    /**
+     * 实现 获取登录用户信息
+     * @param id
+     * @return
+     */
     @Override
     public UserInfoVo getUserInfoId(Long id) {
         UserInfo userInfo = userInfoService.getById(id);

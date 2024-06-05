@@ -57,8 +57,8 @@ public class SystemUserController {
     public Result<Boolean> isUsernameExists(@RequestParam String username) {
         LambdaQueryWrapper<SystemUser> systemUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         systemUserLambdaQueryWrapper.eq(SystemUser::getUsername,username);
-        SystemUser systemUser = systemUserService.getOne(systemUserLambdaQueryWrapper);
-        return Result.ok(systemUser != null);
+        long count = systemUserService.count(systemUserLambdaQueryWrapper);
+        return Result.ok(count == 0);
     }
 
     @DeleteMapping("deleteById")

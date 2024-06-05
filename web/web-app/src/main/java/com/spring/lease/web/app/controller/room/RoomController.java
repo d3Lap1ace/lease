@@ -16,15 +16,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Tag(name = "房间信息")
 @RestController
 @RequestMapping("/app/room")
 public class RoomController {
 
+    @Autowired
+    private RoomInfoService roomInfoService;
+
     @Operation(summary = "分页查询房间列表")
     @GetMapping("pageItem")
     public Result<IPage<RoomItemVo>> pageItem(@RequestParam long current, @RequestParam long size, RoomQueryVo queryVo) {
-        return Result.ok();
+        IPage<RoomItemVo> page = new Page<>(current, size);
+        IPage<RoomItemVo> list = roomInfoService.pageRoomItemByQuery(page,queryVo);
+        return Result.ok(list);
     }
 
     @Operation(summary = "根据id获取房间的详细信息")
