@@ -1,6 +1,7 @@
 package com.spring.lease.web.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spring.lease.common.exception.LeaseException;
 import com.spring.lease.common.result.ResultCodeEnum;
@@ -53,14 +54,31 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
     private FacilityInfoMapper facilityInfoMapper;
     @Resource
     private FeeValueMapper feeValueMapper;
+    @Resource
+    private ProvinceInfoService provinceInfoService;
+    @Resource
+    private DistrictInfoService districtInfoService;
+    @Resource
+    private CityInfoService cityInfoService;
 
 
     @Override
     public void saveOrUpdateApartment(ApartmentSubmitVo apartmentSubmitVo) {
+
+        //根据省份城市区县的id 将相对应的名字赋值
+        ProvinceInfo provinceInfo = provinceInfoService.getById(apartmentSubmitVo.getProvinceId());
+        CityInfo cityInfo = cityInfoService.getById(apartmentSubmitVo.getCityId());
+        DistrictInfo districtInfo = districtInfoService.getById(apartmentSubmitVo.getDistrictId());
+        apartmentSubmitVo.setProvinceName(provinceInfo.getName());
+        apartmentSubmitVo.setCityName(cityInfo.getName());
+        apartmentSubmitVo.setDistrictName(districtInfo.getName());
+
+
         // 保存公寓信息进行curd操作
         super.saveOrUpdate(apartmentSubmitVo);
         // 判断是在添加还是更新 ApartmentSubmitVo->ApartmentInfo->BaseEntity
         Long id = apartmentSubmitVo.getId();
+
         if(id != null){
             // 更新公寓信息
             // 1. 根据apartment_id删除配套
@@ -156,6 +174,7 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
             }
             graphInfoService.saveBatch(graphInfoList);
         }
+
 
     }
 

@@ -3,10 +3,10 @@ server:
 spring:
   # 数据库连接
   datasource:
-    url: jdbc:mysql://192.168.6.100:3306/lease
+    url: jdbc:mysql://192.168.1.2:3306/lease
     type: com.zaxxer.hikari.HikariDataSource
     username: root
-    password: root
+    password: 123456
     hikari:
       connection-test-query: SELECT 1 # 自动检测连接
       connection-timeout: 60000 #数据库连接超时时间,默认30秒
@@ -21,7 +21,7 @@ spring:
 
   data:       # 数据
     redis:    # redis设置
-      host: 192.168.6.100
+      host: 192.168.1.2
       port: 6379
       database: 0
 
@@ -37,7 +37,7 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
 
 minio:  # minio
-  endpoint: http://192.168.6.100:9000
+  endpoint: http://192.168.1.2:9000
   access-key: minioadmin
   secret-key: minioadmin
   bucket-name: lease-pitcher
