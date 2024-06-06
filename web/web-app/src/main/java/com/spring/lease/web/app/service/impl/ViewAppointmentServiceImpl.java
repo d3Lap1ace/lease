@@ -4,7 +4,11 @@ import com.spring.lease.model.entity.ViewAppointment;
 import com.spring.lease.web.app.mapper.ViewAppointmentMapper;
 import com.spring.lease.web.app.service.ViewAppointmentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.spring.lease.web.app.vo.appointment.AppointmentItemVo;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author liubo
@@ -16,6 +20,13 @@ public class ViewAppointmentServiceImpl extends ServiceImpl<ViewAppointmentMappe
         implements ViewAppointmentService {
 
 
+    @Resource
+    private ViewAppointmentMapper viewAppointmentMapper;
+
+    @Override
+    public List<AppointmentItemVo> getAppointmentItemByUserId(Long id) {
+        return viewAppointmentMapper.getAppointmentItemByUserId(id);
+    }
 }
 
 

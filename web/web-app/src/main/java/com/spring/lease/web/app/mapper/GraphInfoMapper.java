@@ -15,6 +15,9 @@ import java.util.List;
 */
 public interface GraphInfoMapper extends BaseMapper<GraphInfo> {
 
+    List<GraphVo> selectListByItemTypeAndId(ItemType room, Long id);
+
+    List<GraphInfo> grapinfoSelectListByItemTypeAndId(ItemType apartment, Long id);
 }
 
 

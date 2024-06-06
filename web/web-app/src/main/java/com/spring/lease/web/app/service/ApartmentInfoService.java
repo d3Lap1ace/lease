@@ -3,6 +3,7 @@ package com.spring.lease.web.app.service;
 import com.spring.lease.model.entity.ApartmentInfo;
 import com.spring.lease.web.app.vo.apartment.ApartmentDetailVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spring.lease.web.app.vo.apartment.ApartmentItemVo;
 
 /**
 * @author liubo
@@ -11,4 +12,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface ApartmentInfoService extends IService<ApartmentInfo> {
 
+
+    ApartmentItemVo getApartmentItemVoById(Long id);
+
+    ApartmentDetailVo getApartmentDetailById(Long id);
 }

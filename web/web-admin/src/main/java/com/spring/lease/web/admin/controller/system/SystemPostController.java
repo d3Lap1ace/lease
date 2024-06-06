@@ -65,6 +65,7 @@ public class SystemPostController {
         LambdaUpdateWrapper<SystemPost> systemPostLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         systemPostLambdaUpdateWrapper.eq(SystemPost::getId,id)
                 .set(SystemPost::getStatus,status);
+        systemPostService.update(systemPostLambdaUpdateWrapper);
         return Result.ok();
     }
 }

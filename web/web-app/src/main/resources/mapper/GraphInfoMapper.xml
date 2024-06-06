@@ -5,4 +5,20 @@
 <mapper namespace="com.spring.lease.web.app.mapper.GraphInfoMapper">
 
 
+    <select id="selectListByItemTypeAndId" resultType="com.spring.lease.web.app.vo.graph.GraphVo">
+        select name,
+               url
+        from graph_info
+        where is_deleted = 0
+          and item_type = #{itemType}
+          and item_id = #{id}
+    </select>
+    <select id="grapinfoSelectListByItemTypeAndId" resultType="com.spring.lease.model.entity.GraphInfo">
+        select name,
+               url
+        from graph_info
+        where is_deleted = 0
+          and item_type = #{itemType}
+          and item_id = #{id}
+    </select>
 </mapper>
