@@ -40,7 +40,8 @@ public class ViewAppointmentController {
     @GetMapping("getDetailById")
     @Operation(summary = "根据ID查询预约详情信息")
     public Result<AppointmentDetailVo> getDetailById(Long id) {
-        return Result.ok();
+        AppointmentDetailVo detailVo = viewAppointmentService.getAppointmentDetailVoById(id);
+        return Result.ok(detailVo);
     }
 
 }

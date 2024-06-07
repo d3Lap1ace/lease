@@ -8,6 +8,7 @@ import com.spring.lease.web.app.vo.agreement.AgreementDetailVo;
 import com.spring.lease.web.app.vo.agreement.AgreementItemVo;
 import com.spring.lease.web.app.vo.graph.GraphVo;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,19 @@ import java.util.List;
 public class LeaseAgreementServiceImpl extends ServiceImpl<LeaseAgreementMapper, LeaseAgreement>
         implements LeaseAgreementService {
 
+    @Resource
+    private LeaseAgreementMapper leaseAgreementMapper;
 
+    /**
+     * 获得个人预约信息
+     * @param username 手机号
+     * @return
+     */
+    @Override
+    public List<AgreementItemVo> getListAgreementByUserId(String username) {
+        return leaseAgreementMapper.getListAgreementByUserId(username);
+
+    }
 }
 
 

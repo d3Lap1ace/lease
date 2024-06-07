@@ -13,7 +13,17 @@ import com.spring.lease.web.app.vo.apartment.ApartmentItemVo;
 public interface ApartmentInfoService extends IService<ApartmentInfo> {
 
 
+    /**
+     * 根据id查询所属公寓信息
+     * @param id
+     * @return
+     */
     ApartmentItemVo getApartmentItemVoById(Long id);
 
+    /**根据id查询公寓信息
+     *
+     * @param id
+     * @return
+     */
     ApartmentDetailVo getApartmentDetailById(Long id);
 }

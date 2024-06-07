@@ -1,6 +1,7 @@
 package com.spring.lease.web.app.mapper;
 
 import com.spring.lease.model.entity.ViewAppointment;
+import com.spring.lease.web.app.vo.appointment.AppointmentDetailVo;
 import com.spring.lease.web.app.vo.appointment.AppointmentItemVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -15,7 +16,18 @@ import java.util.List;
 public interface ViewAppointmentMapper extends BaseMapper<ViewAppointment> {
 
 
+    /** 查询个人预约看房列表
+     * @param id
+     * @return
+     */
     List<AppointmentItemVo> getAppointmentItemByUserId(Long id);
+
+    /**
+     * 根据id查询预约详细信息
+     * @param id
+     * @return
+     */
+
 }
 
 

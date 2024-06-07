@@ -16,8 +16,19 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface RoomInfoService extends IService<RoomInfo> {
 
 
+    /**
+     * 分页查询房间列表
+     * @param page
+     * @param queryVo
+     * @return
+     */
     IPage<RoomItemVo> pageRoomItemByQuery(IPage<RoomItemVo> page, RoomQueryVo queryVo);
 
+    /**
+     * 根据id查询房间详细信息
+     * @param id
+     * @return
+     */
     RoomDetailVo getDetailByid(Long id);
 
     IPage<RoomItemVo> pageItemByApartmentId(IPage<RoomItemVo> page, Long id);

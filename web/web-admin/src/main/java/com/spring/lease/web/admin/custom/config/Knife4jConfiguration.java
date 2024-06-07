@@ -25,7 +25,7 @@ public class Knife4jConfiguration {
                         .description("后台管理系统API")
                         .termsOfService("http://doc.xiaominfo.com")
                         .license(new License().name("Apache 2.0").url("http://doc.xiaominfo.com")))
-                .components(new Components().addSecuritySchemes("Access-Token", new SecurityScheme().type(SecurityScheme.Type.APIKEY).in(SecurityScheme.In.HEADER).name("access_token")));
+                .components(new Components().addSecuritySchemes("Access-Token", new SecurityScheme().type(SecurityScheme.Type.APIKEY).in(SecurityScheme.In.HEADER).name("Access_Token")));
     }
 
     @Bean

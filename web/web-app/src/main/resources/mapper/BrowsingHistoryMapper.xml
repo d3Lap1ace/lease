@@ -36,7 +36,7 @@
                url
         from graph_info
         where is_deleted = 0
-          and item_type = ${@com.atguigu.lease.model.enums.ItemType@ROOM.getCode()}
+          and item_type = ${@com.spring.lease.model.enums.ItemType@ROOM.getCode()}
           and item_id = #{room_id}
     </select>
 </mapper>

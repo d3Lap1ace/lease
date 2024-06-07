@@ -18,8 +18,19 @@ import java.math.BigDecimal;
 public interface RoomInfoMapper extends BaseMapper<RoomInfo> {
 
 
+    /**
+     * 分页查询房间列表
+     * @param page
+     * @param queryVo
+     * @return
+     */
     IPage<RoomItemVo> pageRoomItemByQuery(IPage<RoomItemVo> page, RoomQueryVo queryVo);
 
+    /**
+     * 根据id查询房间信息
+     * @param id
+     * @return
+     */
     RoomInfo selectRoomById(Long id);
 
     BigDecimal selectMinRentByApartmentId(Long id);

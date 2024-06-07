@@ -1,15 +1,19 @@
 package com.spring.lease.web.app.controller.agreement;
 
 
+import com.spring.lease.common.context.LoginUserContext;
 import com.spring.lease.common.result.Result;
 import com.spring.lease.model.entity.LeaseAgreement;
 import com.spring.lease.model.enums.LeaseStatus;
+import com.spring.lease.web.app.service.LeaseAgreementService;
 import com.spring.lease.web.app.vo.agreement.AgreementDetailVo;
 import com.spring.lease.web.app.vo.agreement.AgreementItemVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.LoginContext;
 import java.util.List;
 
 @RestController
@@ -17,10 +21,13 @@ import java.util.List;
 @Tag(name = "租约信息")
 public class LeaseAgreementController {
 
+    @Autowired
+    private LeaseAgreementService leaseAgreementService;
     @Operation(summary = "获取个人租约基本信息列表")
     @GetMapping("listItem")
     public Result<List<AgreementItemVo>> listItem() {
-        return Result.ok();
+        List<AgreementItemVo> list = leaseAgreementService.getListAgreementByUserId(LoginUserContext.getLoginUser().getUsername());
+        return Result.ok(list);
     }
 
     @Operation(summary = "根据id获取租约详细信息")

@@ -47,9 +47,9 @@
             select room_id
             from lease_agreement
             where is_deleted = 0
-            and status in(${@com.atguigu.lease.model.enums.LeaseStatus@SIGNED.getCode()},
-            ${@com.atguigu.lease.model.enums.LeaseStatus@WITHDRAWING.getCode()}))
-            and ri.is_release = ${@com.atguigu.lease.model.enums.ReleaseStatus@RELEASED.getCode()}
+            and status in(${@com.spring.lease.model.enums.LeaseStatus@SIGNED.getCode()},
+            ${@com.spring.lease.model.enums.LeaseStatus@WITHDRAWING.getCode()}))
+            and ri.is_release = ${@com.spring.lease.model.enums.ReleaseStatus@RELEASED.getCode()}
             <if test="queryVo.provinceId != null">
                 and ai.province_id = #{queryVo.provinceId}
             </if>
@@ -98,6 +98,8 @@
                      where is_deleted = 0
                        and room_id = #{id})
     </select>
+
+    <!-- 根据id查询房间信息 -->
     <select id="selectRoomById" resultType="com.spring.lease.model.entity.RoomInfo">
         select id,
                room_number,
@@ -106,8 +108,9 @@
                is_release,
                is_deleted
         from room_info
-        where id = #{id}
+        where id = #{room_number}
     </select>
+
     <select id="selectMinRentByApartmentId" resultType="java.math.BigDecimal">
         select min(rent)
         from room_info
@@ -143,8 +146,8 @@
           and ri.id not in (select room_id
                             from lease_agreement
                             where is_deleted = 0
-                              and status in (${@com.atguigu.lease.model.enums.LeaseStatus@SIGNED.getCode()},
-                                             ${@com.atguigu.lease.model.enums.LeaseStatus@WITHDRAWING.getCode()}))
-          and ri.is_release = ${@com.atguigu.lease.model.enums.ReleaseStatus@RELEASED.getCode()}
+                              and status in (${@com.spring.lease.model.enums.LeaseStatus@SIGNED.getCode()},
+                                             ${@com.spring.lease.model.enums.LeaseStatus@WITHDRAWING.getCode()}))
+          and ri.is_release = ${@com.spring.lease.model.enums.ReleaseStatus@RELEASED.getCode()}
     </select>
 </mapper>

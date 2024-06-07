@@ -14,4 +14,10 @@ import java.util.List;
 */
 public interface LeaseAgreementService extends IService<LeaseAgreement> {
 
+    /**
+     * 获取个人租约基本信息列表
+     * @param username 手机号
+     * @return
+     */
+    List<AgreementItemVo> getListAgreementByUserId(String username);
 }

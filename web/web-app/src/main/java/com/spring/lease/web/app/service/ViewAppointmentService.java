@@ -14,5 +14,17 @@ import java.util.List;
 */
 public interface ViewAppointmentService extends IService<ViewAppointment> {
 
+    /**
+     * 查询个人预约看房列表
+     * @param id
+     * @return
+     */
     List<AppointmentItemVo> getAppointmentItemByUserId(Long id);
+
+    /**
+     * 根据ID查询预约详情信息
+     * @param id
+     * @return
+     */
+    AppointmentDetailVo getAppointmentDetailVoById(Long id);
 }

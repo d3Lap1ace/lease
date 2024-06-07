@@ -38,6 +38,11 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
     private FacilityInfoMapper facilityInfoMapper;
 
 
+    /**
+     * 根据id查询所属公寓信息
+     * @param id
+     * @return
+     */
     @Override
     public ApartmentItemVo getApartmentItemVoById(Long id) {
         ApartmentInfo apartmentInfo = apartmentInfoMapper.selectApartmentById(id);

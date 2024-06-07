@@ -33,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public void sendCode(String phone) {
-        String code = RandomStringUtils.randomNumeric(4);
+        String code = RandomStringUtils.randomNumeric(6);
         // 调用SMSUtils向手机号发送验证码
         System.out.println("code = " + code);
 //        SMSUtils.sendMessage(phone,code);
@@ -54,7 +54,7 @@ public class LoginServiceImpl implements LoginService {
             throw new LeaseException(ResultCodeEnum.APP_LOGIN_CODE_EMPTY);
         }
         // 2 校验验证码
-        String key = RedisConstant.APP_LOGIN_PREFIX + loginVo.getCode();
+        String key = RedisConstant.APP_LOGIN_PREFIX + loginVo.getPhone();
         String code = stringRedisTemplate.opsForValue().get(key);
         if (code == null) {
             throw new LeaseException(ResultCodeEnum.APP_LOGIN_CODE_EXPIRED);
