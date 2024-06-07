@@ -95,11 +95,18 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
         ApartmentDetailVo appApartmentDetailVo = new ApartmentDetailVo();
 
         BeanUtils.copyProperties(apartmentInfo, appApartmentDetailVo);
-        appApartmentDetailVo.setIsDelete(apartmentInfo.getIsDeleted() == 1);
+
         appApartmentDetailVo.setGraphVoList(graphVoList);
         appApartmentDetailVo.setLabelInfoList(labelInfoList);
         appApartmentDetailVo.setFacilityInfoList(facilityInfoList);
         appApartmentDetailVo.setMinRent(minRent);
+
+        if(apartmentInfo.getIsDeleted() == null){
+            appApartmentDetailVo.setIsDelete(true);
+        }else{
+            appApartmentDetailVo.setIsDelete(false);
+        }
+
         return appApartmentDetailVo;
     }
 }

@@ -21,9 +21,9 @@ public interface GraphInfoMapper extends BaseMapper<GraphInfo> {
      * @param id
      * @return
      */
-    List<GraphVo> selectListByItemTypeAndId(ItemType room, Long id);
+    List<GraphVo> selectListByItemTypeAndId(ItemType itemType, Long id);
 
-    List<GraphInfo> grapinfoSelectListByItemTypeAndId(ItemType apartment, Long id);
+    List<GraphInfo> grapinfoSelectListByItemTypeAndId(ItemType itemType, Long id);
 }
 
 

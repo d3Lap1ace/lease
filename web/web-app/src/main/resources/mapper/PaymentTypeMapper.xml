@@ -16,9 +16,15 @@
               (select payment_type_id
                from room_payment_type
                where is_deleted = 0
-                 and room_id = #{room_number})
+                 and room_id = #{id})
     </select>
     <select id="selectPaymentTypeById" resultType="com.spring.lease.model.entity.PaymentType">
 
+        select id,
+               name,
+               pay_month_count,
+               additional_info
+        from payment_type
+        where id = #{id}
     </select>
 </mapper>

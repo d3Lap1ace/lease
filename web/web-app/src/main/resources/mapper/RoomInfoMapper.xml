@@ -7,8 +7,9 @@
     <resultMap id="pageRoomItemByQueryMap" type="com.spring.lease.web.app.vo.room.RoomItemVo" autoMapping="true">
         <id property="id" column="id"/>
         <association property="apartmentInfo" javaType="com.spring.lease.model.entity.ApartmentInfo" autoMapping="true">
-            <id property="id" column="ai_id"/>
+            <id property="id" column="apart_id"/>
             <result property="name" column="name"/>
+            <result property="isRelease" column="apart_is_release"/>
         </association>
         <collection property="graphVoList" ofType="com.spring.lease.web.app.vo.graph.GraphVo" select="listGraphVoByRoomId" column="id" autoMapping="true"/>
         <collection property="labelInfoList" ofType="com.spring.lease.model.entity.LabelInfo" select="listLabelByRoomId" column="id" autoMapping="true"/>
@@ -19,7 +20,7 @@
             ri.id,
             ri.room_number,
             ri.rent,
-            ai.id ai_id,
+            ai.id         apart_id,
             ai.name,
             ai.introduction,
             ai.district_id,
@@ -31,17 +32,18 @@
             ai.address_detail,
             ai.latitude,
             ai.longitude,
-            ai.phone,
-            ai.is_release
+            ai.phone
         from room_info ri
-                 left join apartment_info ai on ri.apartment_id = ai.id and ai.is_deleted = 0 and ai.is_release = 1
-        <where> ri.is_deleted = 0
-          and ri.id not in (select
-                                room_id
-                            from lease_agreement
-                            where status in(2,5)
-                              and is_deleted = 0
-        )
+        left join apartment_info ai on ai.id=ri.apartment_id and ai.is_deleted=0
+        <where>
+            ri.is_deleted=0
+            and ri.id not in(
+                select room_id
+                from lease_agreement
+                where is_deleted = 0
+                and status in(2,5)
+                and ri.is_release = 1
+            )
             <if test="queryVo.provinceId != null">
                 and ai.province_id = #{queryVo.provinceId}
             </if>
@@ -102,7 +104,7 @@
                is_release,
                is_deleted
         from room_info
-        where id = #{room_number}
+        where id = #{id}
     </select>
     <!-- 根据id查询最小房间信息 -->
     <select id="selectMinRentByApartmentId" resultType="java.math.BigDecimal">
@@ -143,7 +145,7 @@
           and ri.id not in (select room_id
                             from lease_agreement
                             where is_deleted = 0
-                              and status in (2,5)
+                              and status in (2,5))
     </select>
 
 </mapper>
