@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.lease.web.app.mapper.LeaseTermMapper">
 
-
+    <!-- 根据房间id查询租期信息-->
     <select id="selectListByRoomId" resultType="com.spring.lease.model.entity.LeaseTerm">
         select id,
                month_count,
@@ -15,5 +15,8 @@
                      from room_lease_term
                      where is_deleted = 0
                        and room_id = #{id})
+    </select>
+    <select id="selectLeaseTermById" resultType="com.spring.lease.model.entity.LeaseTerm">
+
     </select>
 </mapper>

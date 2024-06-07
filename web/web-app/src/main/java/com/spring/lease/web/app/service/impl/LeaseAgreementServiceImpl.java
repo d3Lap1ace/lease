@@ -26,7 +26,16 @@ public class LeaseAgreementServiceImpl extends ServiceImpl<LeaseAgreementMapper,
 
     @Resource
     private LeaseAgreementMapper leaseAgreementMapper;
-
+    @Resource
+    ApartmentInfoMapper apartmentInfoMapper;
+    @Resource
+    RoomInfoMapper roomInfoMapper;
+    @Resource
+    GraphInfoMapper graphInfoMapper;
+    @Resource
+    LeaseTermMapper leaseTermMapper;
+    @Resource
+    PaymentTypeMapper paymentTypeMapper;
     /**
      * 获得个人预约信息
      * @param username 手机号
@@ -36,6 +45,52 @@ public class LeaseAgreementServiceImpl extends ServiceImpl<LeaseAgreementMapper,
     public List<AgreementItemVo> getListAgreementByUserId(String username) {
         return leaseAgreementMapper.getListAgreementByUserId(username);
 
+    }
+
+    /**
+     * 根据id获取租约详细信息
+     * @param id
+     * @return
+     */
+    @Override
+    public AgreementDetailVo getAgreementDetailById(Long id) {
+        //1.查询租约信息
+        LeaseAgreement leaseAgreement = leaseAgreementMapper.selectById(id);
+        if (leaseAgreement == null) {
+            return null;
+        }
+
+        //2.查询公寓信息
+        ApartmentInfo apartmentInfo = apartmentInfoMapper.selectApartmentById(leaseAgreement.getApartmentId());
+
+        //3.查询房间信息
+
+        RoomInfo roomInfo = roomInfoMapper.selectRoomById(leaseAgreement.getRoomId());
+
+        //4.查询公寓图片
+
+        List<GraphVo> apartmentGraphVoList = graphInfoMapper.selectListByItemTypeAndId(ItemType.APARTMENT, leaseAgreement.getApartmentId());
+
+        //5.查询房间图片
+        List<GraphVo> roomGraphVoList = graphInfoMapper.selectListByItemTypeAndId(ItemType.ROOM, leaseAgreement.getRoomId());
+
+        //6.查询租期信息
+        LeaseTerm leaseTerm = leaseTermMapper.selectLeaseTermById(leaseAgreement.getLeaseTermId());
+
+        //7.查询支付方式
+        PaymentType paymentType = paymentTypeMapper.selectPaymentTypeById(leaseAgreement.getPaymentTypeId());
+
+        AgreementDetailVo agreementDetailVo = new AgreementDetailVo();
+        BeanUtils.copyProperties(leaseAgreement, agreementDetailVo);
+        agreementDetailVo.setApartmentName(apartmentInfo.getName());
+        agreementDetailVo.setRoomNumber(roomInfo.getRoomNumber());
+        agreementDetailVo.setApartmentGraphVoList(apartmentGraphVoList);
+        agreementDetailVo.setRoomGraphVoList(roomGraphVoList);
+        agreementDetailVo.setPaymentTypeName(paymentType.getName());
+        agreementDetailVo.setLeaseTermMonthCount(leaseTerm.getMonthCount());
+        agreementDetailVo.setLeaseTermUnit(leaseTerm.getUnit());
+
+        return agreementDetailVo;
     }
 }
 

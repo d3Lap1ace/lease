@@ -4,52 +4,44 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.lease.web.app.mapper.RoomInfoMapper">
 
-    <!-- result map -->
-    <resultMap id="RoomItemVoMap" type="com.spring.lease.web.app.vo.room.RoomItemVo" autoMapping="true">
+    <resultMap id="pageRoomItemByQueryMap" type="com.spring.lease.web.app.vo.room.RoomItemVo" autoMapping="true">
         <id property="id" column="id"/>
         <association property="apartmentInfo" javaType="com.spring.lease.model.entity.ApartmentInfo" autoMapping="true">
-            <id property="id" column="apart_id"/>
-            <result property="isRelease" column="apart_is_release"/>
+            <id property="id" column="ai_id"/>
+            <result property="name" column="name"/>
         </association>
-        <collection property="graphVoList" ofType="com.spring.lease.web.app.vo.graph.GraphVo" autoMapping="true" select="listGraphVoByRoomId" column="id"/>
-        <collection property="labelInfoList" ofType="com.spring.lease.model.entity.LabelInfo" autoMapping="true" select="listLabelByRoomId" column="id"/>
+        <collection property="graphVoList" ofType="com.spring.lease.web.app.vo.graph.GraphVo" select="listGraphVoByRoomId" column="id" autoMapping="true"/>
+        <collection property="labelInfoList" ofType="com.spring.lease.model.entity.LabelInfo" select="listLabelByRoomId" column="id" autoMapping="true"/>
     </resultMap>
 
-    <!-- 根据条件查询房间列表 -->
-    <select id="pageRoomItemByQuery" resultMap="RoomItemVoMap">
+    <select id="pageRoomItemByQuery" resultMap="pageRoomItemByQueryMap">
         select
-        ri.id,
-        ri.room_number,
-        ri.rent,
-        ri.apartment_id,
-        ri.is_release,
-        ai.id         apart_id,
-        ai.name,
-        ai.introduction,
-        ai.district_id,
-        ai.district_name,
-        ai.city_id,
-        ai.city_name,
-        ai.province_id,
-        ai.province_name,
-        ai.address_detail,
-        ai.latitude,
-        ai.longitude,
-        ai.phone,
-        ai.is_release apart_is_release
+            ri.id,
+            ri.room_number,
+            ri.rent,
+            ai.id ai_id,
+            ai.name,
+            ai.introduction,
+            ai.district_id,
+            ai.district_name,
+            ai.city_id,
+            ai.city_name,
+            ai.province_id,
+            ai.province_name,
+            ai.address_detail,
+            ai.latitude,
+            ai.longitude,
+            ai.phone,
+            ai.is_release
         from room_info ri
-        left join apartment_info ai on ai.is_deleted=0
-        on ri.apartment_id=ai.id
-        <where>
-            ri.is_deleted=0
-            and ai.is_deleted=0
-            and ri.id not in(
-            select room_id
-            from lease_agreement
-            where is_deleted = 0
-            and status in(${@com.spring.lease.model.enums.LeaseStatus@SIGNED.getCode()},
-            ${@com.spring.lease.model.enums.LeaseStatus@WITHDRAWING.getCode()}))
-            and ri.is_release = ${@com.spring.lease.model.enums.ReleaseStatus@RELEASED.getCode()}
+                 left join apartment_info ai on ri.apartment_id = ai.id and ai.is_deleted = 0 and ai.is_release = 1
+        <where> ri.is_deleted = 0
+          and ri.id not in (select
+                                room_id
+                            from lease_agreement
+                            where status in(2,5)
+                              and is_deleted = 0
+        )
             <if test="queryVo.provinceId != null">
                 and ai.province_id = #{queryVo.provinceId}
             </if>
@@ -72,32 +64,34 @@
                 )
             </if>
         </where>
-        <if test="queryVo.orderType == 'desc' or queryVo.orderType == 'asc'">
-            order by ri.rent ${queryVo.orderType}
-        </if>
+            <if test="queryVo.orderType == 'desc' or queryVo.orderType == 'asc'">
+                order by ri.rent ${queryVo.orderType}
+            </if>
     </select>
-
-    <!-- 根据房间ID查询图片列表 -->
+    <!-- 分页查询的子查询 根据房间id查询图片列表-->
     <select id="listGraphVoByRoomId" resultType="com.spring.lease.web.app.vo.graph.GraphVo">
         select
             name,
             url
         from graph_info
         where is_deleted = 0
-          and item_id=#{id}
+        and item_id = #{id}
     </select>
-
-    <!-- 根据公寓ID查询标签列表 -->
+    <!-- 分页查询的子查询 根据房间id查询标签列表-->
     <select id="listLabelByRoomId" resultType="com.spring.lease.model.entity.LabelInfo">
-        select id,
-               name
+        select
+            id,
+            name
         from label_info
         where is_deleted = 0
-          and id in (select label_id
-                     from room_label
-                     where is_deleted = 0
-                       and room_id = #{id})
+        and id in (select
+                       label_id
+                   from room_label
+                   where is_deleted = 0
+                   and room_id = #{id})
     </select>
+
+
 
     <!-- 根据id查询房间信息 -->
     <select id="selectRoomById" resultType="com.spring.lease.model.entity.RoomInfo">
@@ -110,13 +104,15 @@
         from room_info
         where id = #{room_number}
     </select>
-
+    <!-- 根据id查询最小房间信息 -->
     <select id="selectMinRentByApartmentId" resultType="java.math.BigDecimal">
         select min(rent)
         from room_info
         where is_deleted = 0
           and apartment_id = #{id}
     </select>
+
+    <!-- 根据公寓id查询房间列表-->
     <select id="pageItemByApartmentId" resultType="com.spring.lease.web.app.vo.room.RoomItemVo">
         select ri.id,
                ri.room_number,
@@ -142,12 +138,12 @@
                            on ri.apartment_id = ai.id
         where ri.is_deleted = 0
           and ai.is_deleted = 0
+          and ri.is_release = 1
           and ai.id = #{id}
           and ri.id not in (select room_id
                             from lease_agreement
                             where is_deleted = 0
-                              and status in (${@com.spring.lease.model.enums.LeaseStatus@SIGNED.getCode()},
-                                             ${@com.spring.lease.model.enums.LeaseStatus@WITHDRAWING.getCode()}))
-          and ri.is_release = ${@com.spring.lease.model.enums.ReleaseStatus@RELEASED.getCode()}
+                              and status in (2,5)
     </select>
+
 </mapper>

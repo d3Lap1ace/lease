@@ -33,6 +33,12 @@ public class BrowsingHistoryServiceImpl extends ServiceImpl<BrowsingHistoryMappe
     @Resource
     private BrowsingHistoryMapper browsingHistoryMapper;
 
+    /**
+     * 分页查询游览历史
+     * @param page
+     * @param userId
+     * @return
+     */
     @Override
     public IPage<HistoryItemVo> pageHistoryItemByUserId(IPage<HistoryItemVo> page, Long userId) {
         return browsingHistoryMapper.pageHistoryItemByUserId(page, userId);

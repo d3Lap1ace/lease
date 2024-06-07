@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.lease.web.app.mapper.LabelInfoMapper">
 
-
+    <!-- 根据房间id查询标签信息 -->
     <select id="selectListByRoomId" resultType="com.spring.lease.model.entity.LabelInfo">
         select id,
                type,

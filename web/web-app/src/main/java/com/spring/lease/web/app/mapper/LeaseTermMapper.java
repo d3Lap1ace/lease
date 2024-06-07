@@ -13,7 +13,14 @@ import java.util.List;
 */
 public interface LeaseTermMapper extends BaseMapper<LeaseTerm> {
 
+    /**
+     * 根据房间id查询租期信息
+     * @param id
+     * @return
+     */
     List<LeaseTerm> selectListByRoomId(Long id);
+
+    LeaseTerm selectLeaseTermById(Long leaseTermId);
 }
 
 

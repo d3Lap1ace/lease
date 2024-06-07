@@ -12,8 +12,18 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-07-26 11:12:39
 */
 public interface BrowsingHistoryService extends IService<BrowsingHistory> {
-
+    /**
+     * 分页查询游览记录
+     * @param page
+     * @param userId
+     * @return
+     */
     IPage<HistoryItemVo> pageHistoryItemByUserId(IPage<HistoryItemVo> page, Long userId);
 
+    /**
+     * 保存游览记录
+     * @param userId
+     * @param id
+     */
     void saveHistory(Long userId, Long id);
 }

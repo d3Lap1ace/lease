@@ -20,4 +20,11 @@ public interface LeaseAgreementService extends IService<LeaseAgreement> {
      * @return
      */
     List<AgreementItemVo> getListAgreementByUserId(String username);
+
+    /**
+     * 根据id获取租约详细信息
+     * @param id
+     * @return
+     */
+    AgreementDetailVo getAgreementDetailById(Long id);
 }

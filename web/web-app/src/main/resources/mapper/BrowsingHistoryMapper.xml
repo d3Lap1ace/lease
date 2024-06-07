@@ -12,7 +12,7 @@
                     select="listGraphVoByRoomId"
                     column="room_id" autoMapping="true"/>
     </resultMap>
-
+    <!-- 分页查询游览历史 -->
     <select id="pageHistoryItemByUserId" resultMap="HistoryItemVoMap">
         select bh.id,
                bh.user_id,
@@ -36,7 +36,7 @@
                url
         from graph_info
         where is_deleted = 0
-          and item_type = ${@com.spring.lease.model.enums.ItemType@ROOM.getCode()}
+          and item_type = ${2}
           and item_id = #{room_id}
     </select>
 </mapper>

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.lease.web.app.mapper.FeeValueMapper">
 
-
+    <!-- 根据公寓id查询杂费列表-->
     <select id="selectListByApartmentId" resultType="com.spring.lease.web.app.vo.fee.FeeValueVo">
         select v.id,
                v.name,

@@ -22,11 +22,7 @@ public interface ViewAppointmentMapper extends BaseMapper<ViewAppointment> {
      */
     List<AppointmentItemVo> getAppointmentItemByUserId(Long id);
 
-    /**
-     * 根据id查询预约详细信息
-     * @param id
-     * @return
-     */
+
 
 }
 

@@ -14,13 +14,13 @@ public interface ApartmentInfoService extends IService<ApartmentInfo> {
 
 
     /**
-     * 根据id查询所属公寓信息
-     * @param id
+     * 根据id查询该房间所属的公寓信息
+     * @param id 公寓id
      * @return
      */
     ApartmentItemVo getApartmentItemVoById(Long id);
 
-    /**根据id查询公寓信息
+    /**根据id查询公寓详细信息
      *
      * @param id
      * @return

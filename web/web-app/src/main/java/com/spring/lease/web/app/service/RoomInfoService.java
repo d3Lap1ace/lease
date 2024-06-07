@@ -26,10 +26,16 @@ public interface RoomInfoService extends IService<RoomInfo> {
 
     /**
      * 根据id查询房间详细信息
-     * @param id
+     * @param id 房间id
      * @return
      */
     RoomDetailVo getDetailByid(Long id);
 
+    /**
+     * 根据公寓id查询房间列表
+     * @param page
+     * @param id
+     * @return
+     */
     IPage<RoomItemVo> pageItemByApartmentId(IPage<RoomItemVo> page, Long id);
 }

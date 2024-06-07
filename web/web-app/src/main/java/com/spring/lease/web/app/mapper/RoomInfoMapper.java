@@ -33,7 +33,19 @@ public interface RoomInfoMapper extends BaseMapper<RoomInfo> {
      */
     RoomInfo selectRoomById(Long id);
 
+    /**
+     * 根据公寓id查询最少的房间价格
+     * @param id
+     * @return
+     */
     BigDecimal selectMinRentByApartmentId(Long id);
 
+
+    /**
+     * 根据公寓id 查询房间列表
+     * @param page
+     * @param id
+     * @return
+     */
     IPage<RoomItemVo> pageItemByApartmentId(IPage<RoomItemVo> page, Long id);
 }

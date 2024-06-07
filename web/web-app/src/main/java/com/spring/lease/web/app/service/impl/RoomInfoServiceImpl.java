@@ -74,8 +74,8 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoMapper, RoomInfo>
     }
 
     /**
-     * 根据id详细查询房间列表
-     * @param id
+     * 根据id详细查询房间详细列表
+     * @param id 房间id
      * @return
      */
     @Override
@@ -130,11 +130,18 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoMapper, RoomInfo>
         appRoomDetailVo.setFeeValueVoList(feeValueVoList);
         appRoomDetailVo.setLeaseTermList(leaseTermList);
 
+        // 添加游览记录
         browsingHistoryService.saveHistory(LoginUserContext.getLoginUser().getUserId(), id);
 
         return appRoomDetailVo;
     }
 
+    /**
+     * 根据公寓id查询房间列表
+     * @param page
+     * @param id
+     * @return
+     */
     @Override
     public IPage<RoomItemVo> pageItemByApartmentId(IPage<RoomItemVo> page, Long id) {
         return roomInfoMapper.pageItemByApartmentId(page, id);

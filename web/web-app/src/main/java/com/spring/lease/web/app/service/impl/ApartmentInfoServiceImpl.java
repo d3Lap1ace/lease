@@ -40,29 +40,38 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
 
     /**
      * 根据id查询所属公寓信息
-     * @param id
+     * @param id 公寓id
      * @return
      */
     @Override
     public ApartmentItemVo getApartmentItemVoById(Long id) {
+        // 根据公寓id查询公寓实体信息
         ApartmentInfo apartmentInfo = apartmentInfoMapper.selectApartmentById(id);
-
+        // 根据公寓id查询标签信息
         List<LabelInfo> labelInfoList = labelInfoMapper.selectListByApartmentId(id);
-
+        // 根据公寓id查询图片信息
         List<GraphInfo> graphVoList = graphInfoMapper.grapinfoSelectListByItemTypeAndId(ItemType.APARTMENT, id);
-
+        // 根据公寓id查询最小租金信息
         BigDecimal minRent = roomInfoMapper.selectMinRentByApartmentId(id);
-
+        // 声明公寓对象
         ApartmentItemVo apartmentItemVo = new ApartmentItemVo();
-
+        // 将apartmentInfo赋值给apartmentItemVo
         BeanUtils.copyProperties(apartmentInfo, apartmentItemVo);
+        // 获得图片列表
         apartmentItemVo.setGraphVoList(graphVoList);
+        // 获得标签列表
         apartmentItemVo.setLabelInfoList(labelInfoList);
+        // 获得最小租金房间
         apartmentItemVo.setMinRent(minRent);
 
         return apartmentItemVo;
     }
 
+    /**
+     * 根据id查询公寓详细信息
+     * @param id
+     * @return
+     */
     @Override
     public ApartmentDetailVo getApartmentDetailById(Long id) {
         //1.查询ApartmentInfo
